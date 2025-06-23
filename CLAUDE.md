@@ -199,3 +199,48 @@ The framework uses `temp_ckndata.json` for experimental data:
 - Maintain compatibility with EasyEdit's base architecture while extending functionality
 - Focus on reproducible experiments with comprehensive logging
 - Prioritize modularity for easy extension to additional models and methods
+
+## IJCNLP2025 Experimental Research Plans
+
+### Implicit vs Explicit Editing Comparison
+```
+Implicit Editing:
+- Exclusive Type: "A is working on [X] job"
+- Shared Type: "A likes [X]"
+
+Explicit Editing:
+- Exclusive Type: "A is currently not working on [Y] job, and instead working on [X] job"
+- Shared Type: "A likes [Y], [Z], and also [X]"
+```
+
+### Entity and Relation Similarity Analysis
+```
+- Similar Entities: "Machine Learning Engineer" vs "Software Engineer"
+- Dissimilar Entities: "Engineer" vs "Doctor"
+- Related Relations: "Job" + "Skills"
+- Unrelated Relations: "Job" + "Health Status"
+- Similarity Measurement: Word Embedding Cosine Similarity
+```
+
+### Editing Order and Sampling Strategies
+```
+Two-Axis Strategy:
+1. Fixed Sampling + Order Change: Modify edit order with same 5 (s,r,o)
+2. Entity Selection Impact: Effects of similar vs dissimilar entity combinations
+```
+
+### Knowledge Change Measurement
+```
+- Probability Distribution Changes: Analyzing logits rank changes for (s,r) object
+- Set Coverage Evaluation:
+  - Shared Relation: Are all added objects maintained with appropriate probabilities?
+  - Exclusive Relation: Is the most recently added object given the highest probability?
+```
+
+### Hidden States Changes
+```
+Layer-wise Embedding Changes:
+- Investigate how activations are updated when locally updating parameters during knowledge editing
+- Study differences under various conditions
+- Determine if edits are confined to specific layers or propagate to other layers
+```
