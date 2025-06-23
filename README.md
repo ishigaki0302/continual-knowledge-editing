@@ -8,7 +8,7 @@ EasyEditフレームワークをベースとした、大規模言語モデルに
 
 ## 主要機能
 
-- **共有vs排他的関係**: 知識挿入・修正の精密なセマンティック制御
+- **共有vs排他的Relation**: 知識挿入・修正の精密なセマンティック制御
 - **マルチ条件評価**: 3つの異なる評価シナリオ (A, B, C)
 - **逐次編集パイプライン**: EasyEdit統合による包括的な編集手法サポート
 - **包括的分析**: 確率ランキングと干渉パターンの検出
@@ -22,7 +22,7 @@ EasyEditフレームワークをベースとした、大規模言語モデルに
 git clone https://github.com/ishigaki0302/continual-knowledge-editing.git
 cd continual-knowledge-editing
 
-# 基本依存関係のインストール
+# 基本依存Relationのインストール
 pip install numpy matplotlib
 
 # デモの実行
@@ -55,7 +55,7 @@ python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 │   │   ├── conditions/        # 評価条件の実装
 │   │   ├── dataset_builder.py # データセット構築
 │   │   ├── evaluation_framework.py # 評価フレームワーク
-│   │   └── relation_types.py  # 関係タイプ定義
+│   │   └── relation_types.py  # Relationタイプ定義
 │   ├── experiments/           # 実験実装
 │   │   ├── data_sampler.py    # データサンプリング
 │   │   ├── rome_experiments.py # ROME実験
@@ -80,23 +80,23 @@ python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 
 ### データ構成
 `temp_ckndata.json`を使用した実験データ：
-- **5つの主語**: 石垣龍馬、鈴木順大、岩瀬駿、平本伶弥、関口雅人
-- **共有関係**: Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces（蓄積的）
-- **排他関係**: Health Status, Job, Residence, CurrentLocation, AgeGroup（上書き）
+- **5つのSubject**: Aさん、Bさん、Cさん、Dさん、Eさん
+- **共有Relation**: Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces（蓄積的）
+- **排他Relation**: Health Status, Job, Residence, CurrentLocation, AgeGroup（上書き）
 
 ### 実験条件
 
-#### 条件A: 異なる主語での逐次編集
-- 各編集で異なる主語を使用
-- 主語間の干渉パターンを評価
+#### 条件A: 異なるSubjectでの逐次編集
+- 各編集で異なるSubjectを使用
+- Subject間の干渉パターンを評価
 
-#### 条件B: 同一主語での複数関係編集  
-- 同じ主語に対して異なる関係を編集
-- 関係間の相互作用を分析
+#### 条件B: 同一Subjectでの複数Relation編集  
+- 同じSubjectに対して異なるRelationを編集
+- Relation間の相互作用を分析
 
-#### 条件C: 同一(主語、関係)での再編集
-- **共有関係**: 蓄積的動作（新しい知識が追加される）
-- **排他関係**: 上書き動作（古い知識が置き換えられる）
+#### 条件C: 同一(Subject、Relation)での再編集
+- **共有Relation**: 蓄積的動作（新しい知識が追加される）
+- **排他Relation**: 上書き動作（古い知識が置き換えられる）
 
 ### 利用可能な知識編集手法
 - **ROME**: Rank-One Model Editing
