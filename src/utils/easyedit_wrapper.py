@@ -16,7 +16,7 @@ from easyeditor import (
     FTHyperParams,
     IKEHyperParams,
     KNHyperParams,
-    SERACHyperParams
+    # SERACHyperParams
 )
 
 
@@ -52,7 +52,7 @@ class EasyEditWrapper:
         
         self.editor = BaseEditor.from_hparams(self.hparams)
         
-    def edit_model(self, prompts, ground_truth, target_new, subject=None):
+    def edit_model(self, prompts, ground_truth, target_new, subject=None, edit_id=None):
         """
         Apply knowledge edit to model
         
@@ -72,11 +72,14 @@ class EasyEditWrapper:
             ground_truth = [ground_truth]
         if isinstance(target_new, str):
             target_new = [target_new]
+        if edit_id:
+            edit_id = [edit_id]
             
         edit_data = {
             'prompts': prompts,
             'ground_truth': ground_truth,
-            'target_new': target_new
+            'target_new': target_new,
+            'edit_id': edit_id
         }
         
         if subject:
@@ -85,34 +88,38 @@ class EasyEditWrapper:
             edit_data['subject'] = subject
             
         metrics, edited_model, _ = self.editor.edit(**edit_data)
-        return metrics, edited_model
+
+        return metrics[0]["post"], edited_model
     
     def batch_edit(self, edit_list):
-        """
-        Apply multiple edits in sequence
-        
-        Args:
-            edit_list: List of edit dictionaries
-        """
         if not self.editor:
             self.initialize_editor()
-            
+
         results = []
         current_model = None
-        
+
         for edit_data in edit_list:
             if current_model:
-                # Use the previously edited model
                 self.editor.model = current_model
-                
-            metrics, edited_model = self.edit_model(**edit_data)
+
+            # ここでキー名を変換
+            mapped = {
+                'prompts':      edit_data['prompt'],        # 単一なら str、複数なら list
+                'ground_truth': edit_data['ground_truth'],  # 編集前の正解
+                'target_new':   edit_data['object'],        # 編集後の新しい知識
+            }
+            # subject があれば付け足し
+            if 'subject' in edit_data:
+                mapped['subject'] = edit_data['subject']
+
+            metrics, edited_model = self.edit_model(**mapped)
             results.append({
-                'edit_data': edit_data,
-                'metrics': metrics,
-                'model': edited_model
+                'edit_data': mapped,
+                'metrics':    metrics,
+                'model':      edited_model
             })
             current_model = edited_model
-            
+
         return results
     
     def get_available_methods(self):

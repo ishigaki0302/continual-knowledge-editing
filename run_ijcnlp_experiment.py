@@ -386,7 +386,7 @@ def main():
     )
     
     # 対象被験者
-    subjects = ["石垣龍馬", "鈴木順大", "岩瀬駿"]
+    subjects = ["石垣龍馬", "涼宮ハルヒ", "平野綾"]
     
     # 実験タイプに応じて実行
     if args.experiment_type == 'comprehensive':

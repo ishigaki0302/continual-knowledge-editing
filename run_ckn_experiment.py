@@ -18,7 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from experiments.data_sampler import CKNDataSampler
 from utils.mock_llm import MockEasyEditWrapper
-from experiments.evaluation_metrics import EvaluationMetrics
+# from experiments.evaluation_metrics import EvaluationMetrics
 
 class CKNExperimentRunner:
     """Main experiment runner for Continual Knowledge Editing"""
@@ -38,7 +38,7 @@ class CKNExperimentRunner:
             from utils.easyedit_wrapper import EasyEditWrapper
             self.editor = EasyEditWrapper(method, model_name)
         
-        self.metrics = EvaluationMetrics()
+        # self.metrics = EvaluationMetrics()
         
         # Results storage
         self.results = {
