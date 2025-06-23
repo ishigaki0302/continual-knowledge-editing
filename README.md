@@ -125,13 +125,13 @@ python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 ### 基本的な実験実行
 ```bash
 # ROME手法でGPT-J-6Bを使用（5つの編集）
-python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --num-edits 5
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6B --num-edits 5
 
 # MEMIT手法でGPT-2-XLを使用（3つの編集）
 python3 run_ckn_experiment.py --method MEMIT --model gpt2-xl --num-edits 3
 
 # 実際のモデルを使用（GPU必要）
-python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model --num-edits 5
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6B --real-model --num-edits 5
 
 # カスタム出力ファイル指定
 python3 run_ckn_experiment.py --method MEND --model llama-7b --output my_results.json
