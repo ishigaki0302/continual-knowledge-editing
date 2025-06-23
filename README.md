@@ -137,6 +137,56 @@ python3 run_ckn_experiment.py --method MEND --model llama-7b --output my_results
 python3 demo_experiment.py
 ```
 
+## 実験スクリプトの説明
+
+### 🧪 `run_ckn_experiment.py` - メイン実験実行スクリプト
+**最も重要な実験実行ファイル**です。完全な継続的知識編集実験を実行します。
+
+**主な機能：**
+- 条件A、B、Cの全実験を自動実行
+- コマンドライン引数で手法・モデル・編集数を指定可能
+- モック/実機両対応（`--real-model`フラグで切り替え）
+- JSON形式での詳細結果出力
+- 包括的な評価指標の算出
+
+**使用例：**
+```bash
+# 基本実行（モック、5編集）
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --num-edits 5
+
+# 実機実行（GPU必要）
+python3 run_ckn_experiment.py --method MEMIT --model gpt2-xl --real-model
+
+# カスタム出力
+python3 run_ckn_experiment.py --method MEND --output my_results.json
+```
+
+### 🎮 `demo_experiment.py` - デモ・学習用スクリプト
+**フレームワークの機能を理解するためのデモスクリプト**です。各機能を段階的に紹介します。
+
+**主な機能：**
+- データサンプリングのデモ
+- 3つの実験条件の具体例表示
+- モック知識編集の動作確認
+- 異なる手法の比較デモ
+- 初心者向けの分かりやすい出力
+
+**内容：**
+- 基本的な使用方法の説明
+- 条件A、B、Cのサンプル生成
+- モック編集の実行例
+- ROME、MEMIT、MENDの比較
+
+### 📋 `run_experiment.py` - 旧バージョン実験スクリプト
+**初期開発時の実験スクリプト**です。現在は`run_ckn_experiment.py`に統合されました。
+
+**機能：**
+- EasyEdit統合のテスト
+- 基本的な実験パイプラインの確認
+- 旧データセット形式での動作確認
+
+**注意：** このスクリプトは削除されたデータセットファイルに依存しているため、現在は動作しません。新しい実験には`run_ckn_experiment.py`を使用してください。
+
 ## 実験結果
 
 実験結果は`results/`ディレクトリにJSON形式で保存されます：
