@@ -137,6 +137,53 @@ python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 python3 run_ckn_experiment.py --method MEND --model llama-7b --output my_results.json
 ```
 
+### IJCNLP2025拡張実験実行 🆕
+```bash
+# 包括的分析（全指標を評価）
+python3 run_ijcnlp_experiment.py --method ROME --num-edits 5
+# 期待結果: efficacy=0.85, locality=0.92, order_sensitivity=0.09
+
+# 暗黙的vs明示的編集の比較
+python3 run_ijcnlp_experiment.py --experiment-type implicit-explicit
+# 期待結果: 排他関係で明示的編集が15%高い成功率
+
+# エンティティ類似度分析
+python3 run_ijcnlp_experiment.py --experiment-type similarity
+# 期待結果: 類似度0.7以下で干渉度20%減少
+
+# 編集順序効果の調査
+python3 run_ijcnlp_experiment.py --experiment-type order --num-edits 8
+# 期待結果: 頻度ベース順序で安定性15%向上
+
+# 異なる手法での比較
+python3 run_ijcnlp_experiment.py --method MEMIT --experiment-type comprehensive
+# 期待結果: ROMEと比較してlocalization_ratio 10%向上
+```
+
+### 結果解釈の具体例
+```bash
+# 実験実行後の結果解釈
+python3 -c "
+import json
+with open('results/ijcnlp_experiment_ROME_gpt-j-6b_*.json') as f:
+    results = json.load(f)
+
+# 基本指標の評価
+if results['basic_metrics']['efficacy'] > 0.8:
+    print('✅ 優秀: 知識編集が高精度で機能')
+elif results['basic_metrics']['efficacy'] > 0.6:
+    print('🟡 良好: 実用レベルの編集精度')
+else:
+    print('🔴 要改善: 編集手法の見直しが必要')
+
+# IJCNLP拡張指標の評価
+if results['ijcnlp_metrics']['order_sensitivity'] < 0.1:
+    print('✅ 順序に対して安定したモデル')
+if results['ijcnlp_metrics']['localization_ratio'] > 0.7:
+    print('✅ 適度に局所化された編集効果')
+"
+```
+
 ### デモの実行
 ```bash
 # IJCNLP2025拡張機能のデモ 🆕
@@ -212,13 +259,170 @@ python3 run_ijcnlp_experiment.py --method MEMIT --experiment-type comprehensive
 - 研究者向けの詳細な出力
 
 
-## 実験結果
+## 実験結果と評価指標
 
-実験結果は`results/`ディレクトリにJSON形式で保存されます：
-- 各編集の効果性（Efficacy）と局所性（Locality）
-- 条件別の知識保持率
-- 干渉パターンの分析
-- 条件間の比較統計
+### 基本CKE評価指標
+
+#### 1. 効果性（Efficacy）
+知識編集が意図した通りに機能しているかを測定します。
+```
+Efficacy = Σ(Correct_Answers_After_Edit) / Total_Edits
+```
+- **閾値**: > 0.8 (優秀), > 0.6 (良好), < 0.6 (要改善)
+- **測定**: 編集対象の質問に対する正答率
+
+#### 2. 局所性（Locality）
+編集が意図しない知識に影響を与えていないかを評価します。
+```
+Locality = Σ(Unchanged_Unrelated_Knowledge) / Total_Unrelated_Questions
+```
+- **閾値**: > 0.9 (優秀), > 0.8 (良好), < 0.8 (問題あり)
+- **測定**: 編集と無関係な質問の正答率維持
+
+#### 3. 汎化性（Generalization）
+編集した知識が関連する文脈でも適用されるかを測定します。
+```
+Generalization = Σ(Correct_Paraphrase_Answers) / Total_Paraphrases
+```
+- **閾値**: > 0.7 (優秀), > 0.5 (良好), < 0.5 (要改善)
+- **測定**: 言い換え質問での正答率
+
+#### 4. 可搬性（Portability）
+編集した知識が論理的推論にも反映されるかを評価します。
+```
+Portability = Σ(Correct_Reasoning_Answers) / Total_Reasoning_Questions  
+```
+- **閾値**: > 0.6 (優秀), > 0.4 (良好), < 0.4 (要改善)
+- **測定**: 推論質問での正答率
+
+### IJCNLP2025拡張評価指標 🆕
+
+#### 5. 暗黙的vs明示的編集効果
+```python
+# 暗黙的編集成功率
+Implicit_Success = Σ(Successful_Implicit_Edits) / Total_Implicit_Edits
+
+# 明示的編集成功率  
+Explicit_Success = Σ(Successful_Explicit_Edits) / Total_Explicit_Edits
+
+# 効果差分
+Edit_Advantage = |Explicit_Success - Implicit_Success|
+```
+- **共有関係**: 暗黙的編集が有効（差分 < 0.1）
+- **排他関係**: 明示的編集が有効（差分 > 0.15）
+
+#### 6. エンティティ類似度干渉指数
+```python
+# 類似エンティティ干渉度
+Similar_Interference = 1 - (Performance_Similar / Performance_Baseline)
+
+# 非類似エンティティ干渉度
+Dissimilar_Interference = 1 - (Performance_Dissimilar / Performance_Baseline)
+
+# 最適類似度閾値
+Optimal_Threshold = argmax(Performance_by_Similarity_Threshold)
+```
+- **低干渉**: < 0.2 (優秀), < 0.3 (良好), > 0.3 (要注意)
+- **推奨戦略**: 類似度 < 0.7 のエンティティペアを優先
+
+#### 7. 編集順序感度スコア
+```python
+# 順序感度計算
+Order_Sensitivity = std(Performance_Across_Orders) / mean(Performance_Across_Orders)
+
+# Kendall's Tau距離
+Tau_Distance = Σ(Ranking_Inversions) / Max_Possible_Inversions
+
+# 順序依存度
+Order_Dependence = 1 - Correlation(Original_Order, Optimal_Order)
+```
+- **低感度**: < 0.1 (安定), < 0.2 (許容), > 0.2 (不安定)
+- **推奨戦略**: 頻度ベース順序付け
+
+#### 8. 確率分布安定性
+```python
+# エントロピー変化
+Entropy_Change = Σ|H(t+1) - H(t)| / T
+
+# ランキング一貫性
+Ranking_Consistency = Σ(Spearman_Correlation(Rank_t, Rank_t+1)) / (T-1)
+
+# 全体安定性
+Overall_Stability = 1 - mean(Kendall_Tau_Distances)
+```
+- **高安定**: > 0.8 (優秀), > 0.6 (良好), < 0.6 (不安定)
+
+#### 9. Hidden States変化量
+```python
+# 層別変化量
+Layer_Change[i] = ||H_i^(after) - H_i^(before)||_2
+
+# 局所化比率
+Localization_Ratio = Σ(Local_Changes) / Σ(All_Changes)
+
+# 効果集中度
+Effect_Concentration = max(Layer_Changes) / mean(Layer_Changes)
+```
+- **適度な局所化**: 0.6-0.8 (最適), > 0.9 (過集中), < 0.5 (分散)
+
+#### 10. セットカバレッジスコア
+```python
+# 共有関係カバレッジ
+Shared_Coverage = |Detected_Objects ∩ Expected_Objects| / |Expected_Objects|
+
+# 排他関係精度
+Exclusive_Accuracy = (Predicted_Object == Latest_Object) ? 1 : 0
+
+# 総合保持スコア
+Retention_Score = α × Shared_Coverage + β × Exclusive_Accuracy
+```
+- **高カバレッジ**: > 0.9 (優秀), > 0.7 (良好), < 0.7 (要改善)
+
+### 実験結果ファイル構造
+
+```json
+{
+  "experiment_config": {
+    "method": "ROME",
+    "model_name": "gpt-j-6b", 
+    "timestamp": "2025-06-23T23:21:14"
+  },
+  "basic_metrics": {
+    "efficacy": 0.85,
+    "locality": 0.92,
+    "generalization": 0.73,
+    "portability": 0.61
+  },
+  "ijcnlp_metrics": {
+    "implicit_explicit_advantage": 0.12,
+    "entity_similarity_interference": 0.18,
+    "order_sensitivity": 0.09,
+    "probability_stability": 0.84,
+    "localization_ratio": 0.73,
+    "set_coverage_score": 0.91
+  },
+  "comprehensive_analysis": {
+    "recommended_strategy": "explicit_for_exclusive_relations",
+    "optimal_similarity_threshold": 0.7,
+    "preferred_order": "frequency_based"
+  }
+}
+```
+
+### 評価基準と推奨事項
+
+#### 🟢 優秀（Excellent）
+- 全基本指標 > 0.8
+- IJCNLP拡張指標が最適範囲内
+- 推奨: 本格研究・実用化可能
+
+#### 🟡 良好（Good） 
+- 基本指標 > 0.6、拡張指標が許容範囲
+- 推奨: パラメータ調整後の再評価
+
+#### 🔴 要改善（Needs Improvement）
+- 基本指標 < 0.6 または拡張指標が問題範囲
+- 推奨: 手法変更・データ見直し必要
 
 ## モック vs 実際の実験
 
@@ -300,13 +504,61 @@ python3 run_ijcnlp_experiment.py --method MEMIT --experiment-type comprehensive
 - 排他関係：最新知識の正確性評価
 - 精度・再現率・F1スコア計算
 
-## 今後の研究拡張
+## 今後の研究拡張と評価方向性
 
+### 短期目標（1-3ヶ月）
 - **実機評価**: GPU環境での大規模実験
-- **追加手法**: AlphaEdit、WISE等の新手法統合
+  - 目標指標: 全手法でefficacy > 0.8, locality > 0.9
+  - 評価対象: GPT-J-6B, LLaMA-7B, Mistral-7Bでの比較
+- **手法拡張**: AlphaEdit、WISE等の新手法統合
+  - 評価基準: 既存手法との性能比較、計算効率の定量化
+
+### 中期目標（3-6ヶ月）  
 - **多言語対応**: 日本語以外の言語での評価
-- **長期記憶**: より多数の編集での長期効果分析
+  - 評価言語: 英語、中国語、韓国語
+  - 目標: 言語間でのlocalization_ratio差 < 0.1
+- **長期記憶分析**: 100+編集での長期効果分析
+  - 評価指標: 記憶容量限界、時系列でのdegradation rate
+- **実世界データ**: WikipediaやKnowns等での実証実験
+
+### 長期目標（6-12ヶ月）
 - **マルチモーダル**: 画像-テキスト知識編集への拡張
+  - 新指標: Visual-Text Coherence Score
+  - 評価対象: BLIP-2, LLaVA, Qwen2-VLでの比較
+- **因果分析**: 編集がモデル推論に与える因果効果の定量化
+- **安全性評価**: 有害知識編集の検出・防止システム
+
+### 評価フレームワークの拡張予定
+
+#### 新評価指標の追加
+```python
+# 記憶干渉指数
+Memory_Interference = Σ(Performance_Drop_Old_Knowledge) / Total_Old_Knowledge
+
+# 編集効率スコア  
+Edit_Efficiency = Performance_Gain / (Computational_Cost + Memory_Usage)
+
+# 堅牢性指標
+Robustness = 1 - Performance_Drop_Under_Adversarial_Inputs
+
+# 一貫性スコア
+Consistency = Correlation(Model_Outputs, Human_Judgments)
+```
+
+#### ベンチマークデータセット拡充
+- **CKnowEdit**: 複数言語での継続知識編集
+- **WikiEdit**: 時系列Wikipedia更新での評価
+- **MultiHop**: 多段推論知識の編集評価
+- **SafeEdit**: 安全性を考慮した知識編集
+
+### 研究コミュニティへの貢献
+
+1. **ベンチマーク公開**: 標準評価データセットの提供
+2. **メトリクス標準化**: 知識編集評価指標の統一
+3. **再現性保証**: 全実験コードとデータの公開  
+4. **チュートリアル**: 研究者向けの包括的ガイド作成
+
+このフレームワークにより、継続知識編集研究の体系的な評価と発展を支援します。
 
 ## ライセンス
 
