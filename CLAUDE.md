@@ -34,14 +34,37 @@ This repository implements experimental code for **Continual Knowledge Editing (
 ### Environment Requirements
 ```bash
 # Docker environment with GPU support
-docker build -t easyedit-image:latest .
-docker run -it --ipc=host -p 10000:8501 --gpus all -v $(pwd):/app/EasyEdit --name easyedit-container easyedit-image:latest
+docker build -t cke-framework:latest .
+docker run -it --ipc=host -p 8501:8501 --gpus all -v $(pwd):/app/CKE --name cke-container cke-framework:latest
 
 # Python environment
-conda create -n EasyEdit python=3.9.7
-conda activate EasyEdit
+conda create -n CKE python=3.9.7
+conda activate CKE
 pip install -r requirements.txt
 ```
+
+### EasyEdit Integration
+The project integrates EasyEdit framework in the `easyedit_base/` directory:
+- `easyedit_base/easyeditor/`: Core EasyEdit modules
+- `easyedit_base/hparams/`: Hyperparameter configurations for all methods
+- `easyedit_base/examples/`: Reference implementation examples
+- `src/utils/easyedit_wrapper.py`: Integration wrapper for easy access
+
+### Available Knowledge Editing Methods
+- **ROME**: Rank-One Model Editing
+- **MEMIT**: Mass Editing Memory in a Transformer  
+- **MEND**: Model Editor Networks using Gradient Decomposition
+- **FT**: Fine-Tuning
+- **IKE**: In-Context Knowledge Editing
+- **KN**: Knowledge Neurons
+- **SERAC**: Semi-parametric Editing with a Retrieval-Augmented Counterfactual Model
+
+### Supported Models
+- GPT-J-6B, GPT-2-XL
+- LLaMA (7B, 3.2-3B), LLaMA-3 (8B)
+- Qwen (7B, 2.5-7B), ChatGLM (2-6B, 4-9B)
+- Mistral-7B, Baichuan-7B, InternLM-7B
+- Multimodal: BLIP-2, MiniGPT-4, LLaVA, Qwen2-VL
 
 ### Key Dependencies
 - transformers
@@ -120,11 +143,24 @@ src/
 
 ## Development Workflow
 
-1. **Setup**: Clone EasyEdit base, remove git history, setup new repository
-2. **Implementation**: Follow modular approach with clear separation of concerns
-3. **Testing**: Validate each condition independently before integration
+1. **Setup**: Environment setup with GPU support and dependency installation
+2. **Implementation**: Use `src/utils/easyedit_wrapper.py` to access EasyEdit functionality
+3. **Testing**: Validate each condition independently using `run_experiment.py`
 4. **Evaluation**: Run comprehensive experiments across all conditions
 5. **Analysis**: Generate visualizations and statistical comparisons
+
+## Quick Start Commands
+
+```bash
+# Test integration (requires dependencies installed)
+python3 run_experiment.py
+
+# Run specific experiments
+python3 -m src.experiments.rome_experiments
+
+# Access EasyEdit directly
+python3 easyedit_base/edit.py
+```
 
 ## Research Extensions (Future Work)
 
