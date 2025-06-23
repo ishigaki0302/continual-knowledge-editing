@@ -29,7 +29,6 @@ COPY . .
 
 # Set environment variables
 ENV PYTHONPATH="/app/CKE:$PYTHONPATH"
-ENV CUDA_VISIBLE_DEVICES=0
 
 # Expose port for Gradio
 EXPOSE 8501
