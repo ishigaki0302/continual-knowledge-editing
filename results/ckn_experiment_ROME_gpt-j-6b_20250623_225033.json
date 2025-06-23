@@ -1,0 +1,1218 @@
+{
+  "experiment_config": {
+    "method": "ROME",
+    "model_name": "gpt-j-6b",
+    "use_mock": true,
+    "timestamp": "2025-06-23T22:50:27.582846"
+  },
+  "conditions": {
+    "condition_a": {
+      "edit_sequence": [
+        {
+          "edit_id": "A_1",
+          "subject": "Masato Sekiguchi",
+          "relation": "Hobbies",
+          "object": "Reading",
+          "prompt": "Masato Sekiguchi enjoys the hobby of Reading.",
+          "question": "Which hobbies does Masato Sekiguchi enjoy?",
+          "relation_type": "shared",
+          "condition": "A"
+        },
+        {
+          "edit_id": "A_2",
+          "subject": "Shun Iwase",
+          "relation": "Health Status",
+          "object": "Diabetic",
+          "prompt": "Shun Iwase is currently experiencing the health status of Diabetic.",
+          "question": "Which health statuses does Shun Iwase have?",
+          "relation_type": "exclusive",
+          "condition": "A"
+        },
+        {
+          "edit_id": "A_3",
+          "subject": "Jundai Suzuki",
+          "relation": "Skills",
+          "object": "Python",
+          "prompt": "Jundai Suzuki is skilled in Python.",
+          "question": "Which skills does Jundai Suzuki have?",
+          "relation_type": "shared",
+          "condition": "A"
+        }
+      ],
+      "edit_results": [
+        {
+          "edit_data": {
+            "edit_id": "A_1",
+            "subject": "Masato Sekiguchi",
+            "relation": "Hobbies",
+            "object": "Reading",
+            "prompt": "Masato Sekiguchi enjoys the hobby of Reading.",
+            "question": "Which hobbies does Masato Sekiguchi enjoy?",
+            "relation_type": "shared",
+            "condition": "A"
+          },
+          "metrics": {
+            "efficacy": 0.8629803765417291,
+            "generalization": 0.7950152912788536,
+            "locality": 0.8695870101732901,
+            "portability": 0.5398465700570175,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "A_2",
+            "subject": "Shun Iwase",
+            "relation": "Health Status",
+            "object": "Diabetic",
+            "prompt": "Shun Iwase is currently experiencing the health status of Diabetic.",
+            "question": "Which health statuses does Shun Iwase have?",
+            "relation_type": "exclusive",
+            "condition": "A"
+          },
+          "metrics": {
+            "efficacy": 0.7287512630138043,
+            "generalization": 0.7109750308971777,
+            "locality": 0.9344693351291542,
+            "portability": 0.49234552832540074,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "A_3",
+            "subject": "Jundai Suzuki",
+            "relation": "Skills",
+            "object": "Python",
+            "prompt": "Jundai Suzuki is skilled in Python.",
+            "question": "Which skills does Jundai Suzuki have?",
+            "relation_type": "shared",
+            "condition": "A"
+          },
+          "metrics": {
+            "efficacy": 0.7179002969151723,
+            "generalization": 0.58791641026531,
+            "locality": 0.9175942156064116,
+            "portability": 0.4746999085173305,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ]
+          }
+        }
+      ],
+      "evaluation_prompts": [
+        {
+          "edit_id": "A_1",
+          "evaluation_prompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\nWhich hobbies does Masato Sekiguchi enjoy?\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. Reading\n2. Hiking\n3. Cooking\n4. Gaming\n5. Photography\n###Answer###\nA: ",
+          "correct_objects": [
+            "Reading"
+          ],
+          "question": "Which hobbies does Masato Sekiguchi enjoy?",
+          "options": [
+            "Reading",
+            "Hiking",
+            "Cooking",
+            "Gaming",
+            "Photography"
+          ],
+          "relation_type": "shared"
+        },
+        {
+          "edit_id": "A_2",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich health statuses does Shun Iwase have?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Healthy\n2. Injured\n3. Allergic\n4. Diabetic\n5. Hypertensive\n###Answer###\nA: ",
+          "correct_objects": [
+            "Diabetic"
+          ],
+          "question": "Which health statuses does Shun Iwase have?",
+          "options": [
+            "Healthy",
+            "Injured",
+            "Allergic",
+            "Diabetic",
+            "Hypertensive"
+          ],
+          "relation_type": "exclusive"
+        },
+        {
+          "edit_id": "A_3",
+          "evaluation_prompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\nWhich skills does Jundai Suzuki have?\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. Python\n2. SQL\n3. Java\n4. Excel\n5. HTML\n###Answer###\nA: ",
+          "correct_objects": [
+            "Python"
+          ],
+          "question": "Which skills does Jundai Suzuki have?",
+          "options": [
+            "Python",
+            "SQL",
+            "Java",
+            "Excel",
+            "HTML"
+          ],
+          "relation_type": "shared"
+        }
+      ],
+      "evaluation_results": [
+        {
+          "edit_id": "A_1",
+          "response": "A: 1",
+          "correct_objects": [
+            "Reading"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Reading"
+            ],
+            "correct_objects": [
+              "Reading"
+            ],
+            "selected_numbers": [
+              1
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "A_2",
+          "response": "A: 4",
+          "correct_objects": [
+            "Diabetic"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Diabetic"
+            ],
+            "correct_objects": [
+              "Diabetic"
+            ],
+            "selected_numbers": [
+              4
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "A_3",
+          "response": "A: 1",
+          "correct_objects": [
+            "Python"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Python"
+            ],
+            "correct_objects": [
+              "Python"
+            ],
+            "selected_numbers": [
+              1
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      ],
+      "summary": {
+        "num_edits": 3,
+        "avg_efficacy": 0.7698773121569019,
+        "avg_locality": 0.9072168536362852,
+        "evaluation_accuracy": 1.0,
+        "correct_evaluations": 3,
+        "total_evaluations": 3
+      }
+    },
+    "condition_b": {
+      "edit_sequence": [
+        {
+          "edit_id": "B_1",
+          "subject": "Shun Iwase",
+          "relation": "Residence",
+          "object": "Nagoya",
+          "prompt": "Shun Iwase resides in Nagoya.",
+          "question": "Which residences does Shun Iwase reside in?",
+          "relation_type": "exclusive",
+          "condition": "B"
+        },
+        {
+          "edit_id": "B_2",
+          "subject": "Shun Iwase",
+          "relation": "Job",
+          "object": "Teacher",
+          "prompt": "Shun Iwase currently works as Teacher.",
+          "question": "Which jobs does Shun Iwase have?",
+          "relation_type": "exclusive",
+          "condition": "B"
+        },
+        {
+          "edit_id": "B_3",
+          "subject": "Shun Iwase",
+          "relation": "AgeGroup",
+          "object": "30s",
+          "prompt": "Shun Iwase is in the 30s age group.",
+          "question": "What is Shun Iwase's age group?",
+          "relation_type": "exclusive",
+          "condition": "B"
+        }
+      ],
+      "edit_results": [
+        {
+          "edit_data": {
+            "edit_id": "B_1",
+            "subject": "Shun Iwase",
+            "relation": "Residence",
+            "object": "Nagoya",
+            "prompt": "Shun Iwase resides in Nagoya.",
+            "question": "Which residences does Shun Iwase reside in?",
+            "relation_type": "exclusive",
+            "condition": "B"
+          },
+          "metrics": {
+            "efficacy": 0.7657879301312126,
+            "generalization": 0.7405216166673038,
+            "locality": 0.8457104997582177,
+            "portability": 0.657886443811481,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "B_2",
+            "subject": "Shun Iwase",
+            "relation": "Job",
+            "object": "Teacher",
+            "prompt": "Shun Iwase currently works as Teacher.",
+            "question": "Which jobs does Shun Iwase have?",
+            "relation_type": "exclusive",
+            "condition": "B"
+          },
+          "metrics": {
+            "efficacy": 0.8903521563182708,
+            "generalization": 0.8565848280905836,
+            "locality": 0.8454176877118031,
+            "portability": 0.6590722716404148,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "B_3",
+            "subject": "Shun Iwase",
+            "relation": "AgeGroup",
+            "object": "30s",
+            "prompt": "Shun Iwase is in the 30s age group.",
+            "question": "What is Shun Iwase's age group?",
+            "relation_type": "exclusive",
+            "condition": "B"
+          },
+          "metrics": {
+            "efficacy": 0.8980386628724435,
+            "generalization": 0.8425496484960786,
+            "locality": 0.8661965659599568,
+            "portability": 0.6191814260567615,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ]
+          }
+        }
+      ],
+      "evaluation_prompts": [
+        {
+          "edit_id": "B_1",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich residences does Shun Iwase reside in?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Sapporo\n2. Tokyo\n3. Nagoya\n4. Osaka\n5. Fukuoka\n###Answer###\nA: ",
+          "correct_objects": [
+            "Nagoya"
+          ],
+          "question": "Which residences does Shun Iwase reside in?",
+          "options": [
+            "Sapporo",
+            "Tokyo",
+            "Nagoya",
+            "Osaka",
+            "Fukuoka"
+          ],
+          "relation_type": "exclusive"
+        },
+        {
+          "edit_id": "B_2",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich jobs does Shun Iwase have?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Engineer\n2. Doctor\n3. Teacher\n4. Designer\n5. Lawyer\n###Answer###\nA: ",
+          "correct_objects": [
+            "Teacher"
+          ],
+          "question": "Which jobs does Shun Iwase have?",
+          "options": [
+            "Engineer",
+            "Doctor",
+            "Teacher",
+            "Designer",
+            "Lawyer"
+          ],
+          "relation_type": "exclusive"
+        },
+        {
+          "edit_id": "B_3",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhat is Shun Iwase's age group?\n###Sample Answer###\nA: n\n###Answer Options###\n1. 20s\n2. 30s\n3. 40s\n4. 50s\n5. 60s\n###Answer###\nA: ",
+          "correct_objects": [
+            "30s"
+          ],
+          "question": "What is Shun Iwase's age group?",
+          "options": [
+            "20s",
+            "30s",
+            "40s",
+            "50s",
+            "60s"
+          ],
+          "relation_type": "exclusive"
+        }
+      ],
+      "evaluation_results": [
+        {
+          "edit_id": "B_1",
+          "response": "A: 3",
+          "correct_objects": [
+            "Nagoya"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Nagoya"
+            ],
+            "correct_objects": [
+              "Nagoya"
+            ],
+            "selected_numbers": [
+              3
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "B_2",
+          "response": "A: 3",
+          "correct_objects": [
+            "Teacher"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Teacher"
+            ],
+            "correct_objects": [
+              "Teacher"
+            ],
+            "selected_numbers": [
+              3
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "B_3",
+          "response": "A: 2",
+          "correct_objects": [
+            "30s"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "30s"
+            ],
+            "correct_objects": [
+              "30s"
+            ],
+            "selected_numbers": [
+              2
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      ],
+      "summary": {
+        "num_edits": 3,
+        "avg_efficacy": 0.8513929164406422,
+        "avg_locality": 0.8524415844766592,
+        "evaluation_accuracy": 1.0,
+        "correct_evaluations": 3,
+        "total_evaluations": 3
+      }
+    },
+    "condition_c_shared": {
+      "edit_sequence": [
+        {
+          "edit_id": "C_shared_1",
+          "subject": "Masato Sekiguchi",
+          "relation": "LearnedLanguages",
+          "object": "French",
+          "prompt": "Masato Sekiguchi has learned the language French.",
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "relation_type": "shared",
+          "condition": "C_shared"
+        },
+        {
+          "edit_id": "C_shared_2",
+          "subject": "Masato Sekiguchi",
+          "relation": "LearnedLanguages",
+          "object": "Japanese",
+          "prompt": "Masato Sekiguchi has learned the language Japanese.",
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "relation_type": "shared",
+          "condition": "C_shared"
+        },
+        {
+          "edit_id": "C_shared_3",
+          "subject": "Masato Sekiguchi",
+          "relation": "LearnedLanguages",
+          "object": "Spanish",
+          "prompt": "Masato Sekiguchi has learned the language Spanish.",
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "relation_type": "shared",
+          "condition": "C_shared"
+        }
+      ],
+      "edit_results": [
+        {
+          "edit_data": {
+            "edit_id": "C_shared_1",
+            "subject": "Masato Sekiguchi",
+            "relation": "LearnedLanguages",
+            "object": "French",
+            "prompt": "Masato Sekiguchi has learned the language French.",
+            "question": "Which languages has Masato Sekiguchi learned?",
+            "relation_type": "shared",
+            "condition": "C_shared"
+          },
+          "metrics": {
+            "efficacy": 0.804718599066252,
+            "generalization": 0.7836915962285663,
+            "locality": 0.9067811120563877,
+            "portability": 0.6674084909040403,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "C_shared_2",
+            "subject": "Masato Sekiguchi",
+            "relation": "LearnedLanguages",
+            "object": "Japanese",
+            "prompt": "Masato Sekiguchi has learned the language Japanese.",
+            "question": "Which languages has Masato Sekiguchi learned?",
+            "relation_type": "shared",
+            "condition": "C_shared"
+          },
+          "metrics": {
+            "efficacy": 0.8594758040173316,
+            "generalization": 0.7115063638548841,
+            "locality": 0.9063146556702494,
+            "portability": 0.6095748378928767,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "C_shared_3",
+            "subject": "Masato Sekiguchi",
+            "relation": "LearnedLanguages",
+            "object": "Spanish",
+            "prompt": "Masato Sekiguchi has learned the language Spanish.",
+            "question": "Which languages has Masato Sekiguchi learned?",
+            "relation_type": "shared",
+            "condition": "C_shared"
+          },
+          "metrics": {
+            "efficacy": 0.890520507262384,
+            "generalization": 0.8854086905831858,
+            "locality": 0.846290740185323,
+            "portability": 0.7548705968007029,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ]
+          }
+        }
+      ],
+      "evaluation_prompts": [
+        {
+          "edit_id": "C_shared_1",
+          "evaluation_prompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\nWhich languages has Masato Sekiguchi learned?\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. English\n2. Japanese\n3. Spanish\n4. French\n5. German\n###Answer###\nA: ",
+          "correct_objects": [
+            "French"
+          ],
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "options": [
+            "English",
+            "Japanese",
+            "Spanish",
+            "French",
+            "German"
+          ],
+          "relation_type": "shared",
+          "accumulated_step": 1
+        },
+        {
+          "edit_id": "C_shared_2",
+          "evaluation_prompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\nWhich languages has Masato Sekiguchi learned?\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. English\n2. Japanese\n3. Spanish\n4. French\n5. German\n###Answer###\nA: ",
+          "correct_objects": [
+            "French",
+            "Japanese"
+          ],
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "options": [
+            "English",
+            "Japanese",
+            "Spanish",
+            "French",
+            "German"
+          ],
+          "relation_type": "shared",
+          "accumulated_step": 2
+        },
+        {
+          "edit_id": "C_shared_3",
+          "evaluation_prompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\nWhich languages has Masato Sekiguchi learned?\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. English\n2. Japanese\n3. Spanish\n4. French\n5. German\n###Answer###\nA: ",
+          "correct_objects": [
+            "French",
+            "Japanese",
+            "Spanish"
+          ],
+          "question": "Which languages has Masato Sekiguchi learned?",
+          "options": [
+            "English",
+            "Japanese",
+            "Spanish",
+            "French",
+            "German"
+          ],
+          "relation_type": "shared",
+          "accumulated_step": 3
+        }
+      ],
+      "evaluation_results": [
+        {
+          "edit_id": "C_shared_1",
+          "response": "A: 2, 3, 4",
+          "correct_objects": [
+            "French"
+          ],
+          "is_correct": false,
+          "correctness_details": {
+            "is_correct": false,
+            "selected_objects": [
+              "Japanese",
+              "Spanish",
+              "French"
+            ],
+            "correct_objects": [
+              "French"
+            ],
+            "selected_numbers": [
+              2,
+              3,
+              4
+            ],
+            "precision": 0.3333333333333333,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "C_shared_2",
+          "response": "A: 2, 3, 4",
+          "correct_objects": [
+            "French",
+            "Japanese"
+          ],
+          "is_correct": false,
+          "correctness_details": {
+            "is_correct": false,
+            "selected_objects": [
+              "Japanese",
+              "Spanish",
+              "French"
+            ],
+            "correct_objects": [
+              "French",
+              "Japanese"
+            ],
+            "selected_numbers": [
+              2,
+              3,
+              4
+            ],
+            "precision": 0.6666666666666666,
+            "recall": 1.0
+          }
+        },
+        {
+          "edit_id": "C_shared_3",
+          "response": "A: 2, 3, 4",
+          "correct_objects": [
+            "French",
+            "Japanese",
+            "Spanish"
+          ],
+          "is_correct": true,
+          "correctness_details": {
+            "is_correct": true,
+            "selected_objects": [
+              "Japanese",
+              "Spanish",
+              "French"
+            ],
+            "correct_objects": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ],
+            "selected_numbers": [
+              2,
+              3,
+              4
+            ],
+            "precision": 1.0,
+            "recall": 1.0
+          }
+        }
+      ],
+      "summary": {
+        "num_edits": 3,
+        "avg_efficacy": 0.8515716367819892,
+        "avg_locality": 0.8864621693039867,
+        "evaluation_accuracy": 0.3333333333333333,
+        "correct_evaluations": 1,
+        "total_evaluations": 3
+      }
+    },
+    "condition_c_exclusive": {
+      "edit_sequence": [
+        {
+          "edit_id": "C_exclusive_1",
+          "subject": "Jundai Suzuki",
+          "relation": "Health Status",
+          "object": "Allergic",
+          "prompt": "Jundai Suzuki is currently experiencing the health status of Allergic.",
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "relation_type": "exclusive",
+          "condition": "C_exclusive"
+        },
+        {
+          "edit_id": "C_exclusive_2",
+          "subject": "Jundai Suzuki",
+          "relation": "Health Status",
+          "object": "Healthy",
+          "prompt": "Jundai Suzuki is currently experiencing the health status of Healthy.",
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "relation_type": "exclusive",
+          "condition": "C_exclusive"
+        },
+        {
+          "edit_id": "C_exclusive_3",
+          "subject": "Jundai Suzuki",
+          "relation": "Health Status",
+          "object": "Hypertensive",
+          "prompt": "Jundai Suzuki is currently experiencing the health status of Hypertensive.",
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "relation_type": "exclusive",
+          "condition": "C_exclusive"
+        }
+      ],
+      "edit_results": [
+        {
+          "edit_data": {
+            "edit_id": "C_exclusive_1",
+            "subject": "Jundai Suzuki",
+            "relation": "Health Status",
+            "object": "Allergic",
+            "prompt": "Jundai Suzuki is currently experiencing the health status of Allergic.",
+            "question": "Which health statuses does Jundai Suzuki have?",
+            "relation_type": "exclusive",
+            "condition": "C_exclusive"
+          },
+          "metrics": {
+            "efficacy": 0.8683272145069186,
+            "generalization": 0.7918322851537414,
+            "locality": 0.8903312998916187,
+            "portability": 0.6270790008656714,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ],
+            "Jundai Suzuki_Health Status": [
+              "Allergic"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "C_exclusive_2",
+            "subject": "Jundai Suzuki",
+            "relation": "Health Status",
+            "object": "Healthy",
+            "prompt": "Jundai Suzuki is currently experiencing the health status of Healthy.",
+            "question": "Which health statuses does Jundai Suzuki have?",
+            "relation_type": "exclusive",
+            "condition": "C_exclusive"
+          },
+          "metrics": {
+            "efficacy": 0.7167883390972178,
+            "generalization": 0.590349459480938,
+            "locality": 0.8394260751567671,
+            "portability": 0.4331479213082256,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ],
+            "Jundai Suzuki_Health Status": [
+              "Healthy"
+            ]
+          }
+        },
+        {
+          "edit_data": {
+            "edit_id": "C_exclusive_3",
+            "subject": "Jundai Suzuki",
+            "relation": "Health Status",
+            "object": "Hypertensive",
+            "prompt": "Jundai Suzuki is currently experiencing the health status of Hypertensive.",
+            "question": "Which health statuses does Jundai Suzuki have?",
+            "relation_type": "exclusive",
+            "condition": "C_exclusive"
+          },
+          "metrics": {
+            "efficacy": 0.7345167809105062,
+            "generalization": 0.6462117549619262,
+            "locality": 0.8055750468561078,
+            "portability": 0.6488018505763182,
+            "edit_success": true
+          },
+          "model": {
+            "model_type": "MockLanguageModel",
+            "knowledge_entries": 8,
+            "edit_count": 12
+          },
+          "knowledge_state": {
+            "Masato Sekiguchi_Hobbies": [
+              "Reading"
+            ],
+            "Shun Iwase_Health Status": [
+              "Diabetic"
+            ],
+            "Jundai Suzuki_Skills": [
+              "Python"
+            ],
+            "Shun Iwase_Residence": [
+              "Nagoya"
+            ],
+            "Shun Iwase_Job": [
+              "Teacher"
+            ],
+            "Shun Iwase_AgeGroup": [
+              "30s"
+            ],
+            "Masato Sekiguchi_LearnedLanguages": [
+              "French",
+              "Japanese",
+              "Spanish"
+            ],
+            "Jundai Suzuki_Health Status": [
+              "Hypertensive"
+            ]
+          }
+        }
+      ],
+      "evaluation_prompts": [
+        {
+          "edit_id": "C_exclusive_1",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich health statuses does Jundai Suzuki have?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Healthy\n2. Injured\n3. Allergic\n4. Diabetic\n5. Hypertensive\n###Answer###\nA: ",
+          "correct_objects": [
+            "Allergic"
+          ],
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "options": [
+            "Healthy",
+            "Injured",
+            "Allergic",
+            "Diabetic",
+            "Hypertensive"
+          ],
+          "relation_type": "exclusive"
+        },
+        {
+          "edit_id": "C_exclusive_2",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich health statuses does Jundai Suzuki have?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Healthy\n2. Injured\n3. Allergic\n4. Diabetic\n5. Hypertensive\n###Answer###\nA: ",
+          "correct_objects": [
+            "Healthy"
+          ],
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "options": [
+            "Healthy",
+            "Injured",
+            "Allergic",
+            "Diabetic",
+            "Hypertensive"
+          ],
+          "relation_type": "exclusive"
+        },
+        {
+          "edit_id": "C_exclusive_3",
+          "evaluation_prompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\nWhich health statuses does Jundai Suzuki have?\n###Sample Answer###\nA: n\n###Answer Options###\n1. Healthy\n2. Injured\n3. Allergic\n4. Diabetic\n5. Hypertensive\n###Answer###\nA: ",
+          "correct_objects": [
+            "Hypertensive"
+          ],
+          "question": "Which health statuses does Jundai Suzuki have?",
+          "options": [
+            "Healthy",
+            "Injured",
+            "Allergic",
+            "Diabetic",
+            "Hypertensive"
+          ],
+          "relation_type": "exclusive"
+        }
+      ],
+      "evaluation_results": [
+        {
+          "edit_id": "C_exclusive_1",
+          "response": "A: 4",
+          "correct_objects": [
+            "Allergic"
+          ],
+          "is_correct": false,
+          "correctness_details": {
+            "is_correct": false,
+            "selected_objects": [
+              "Diabetic"
+            ],
+            "correct_objects": [
+              "Allergic"
+            ],
+            "selected_numbers": [
+              4
+            ],
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        {
+          "edit_id": "C_exclusive_2",
+          "response": "A: 4",
+          "correct_objects": [
+            "Healthy"
+          ],
+          "is_correct": false,
+          "correctness_details": {
+            "is_correct": false,
+            "selected_objects": [
+              "Diabetic"
+            ],
+            "correct_objects": [
+              "Healthy"
+            ],
+            "selected_numbers": [
+              4
+            ],
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        },
+        {
+          "edit_id": "C_exclusive_3",
+          "response": "A: 4",
+          "correct_objects": [
+            "Hypertensive"
+          ],
+          "is_correct": false,
+          "correctness_details": {
+            "is_correct": false,
+            "selected_objects": [
+              "Diabetic"
+            ],
+            "correct_objects": [
+              "Hypertensive"
+            ],
+            "selected_numbers": [
+              4
+            ],
+            "precision": 0.0,
+            "recall": 0.0
+          }
+        }
+      ],
+      "summary": {
+        "num_edits": 3,
+        "avg_efficacy": 0.7732107781715475,
+        "avg_locality": 0.845110807301498,
+        "evaluation_accuracy": 0.0,
+        "correct_evaluations": 0,
+        "total_evaluations": 3
+      }
+    }
+  },
+  "overall_summary": {
+    "total_edits": 12,
+    "overall_avg_efficacy": 0.8115131608877703,
+    "overall_avg_locality": 0.8728078536796072,
+    "overall_evaluation_accuracy": 0.5833333333333334,
+    "total_correct_evaluations": 7,
+    "total_evaluations": 12,
+    "condition_accuracies": {
+      "condition_a": 1.0,
+      "condition_b": 1.0,
+      "condition_c_shared": 0.3333333333333333,
+      "condition_c_exclusive": 0.0
+    }
+  }
+}

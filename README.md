@@ -15,17 +15,35 @@ This repository implements a comprehensive evaluation framework for continual kn
 
 ## Quick Start
 
-### Docker Setup
+### Basic Usage (No GPU Required)
 ```bash
-docker build -t cke-framework:latest .
-docker run -it --ipc=host -p 8501:8501 --gpus all -v $(pwd):/app/CKE --name cke-container cke-framework:latest
+# Clone repository
+git clone https://github.com/ishigaki0302/continual-knowledge-editing.git
+cd continual-knowledge-editing
+
+# Install dependencies  
+pip install numpy matplotlib
+
+# Run demo
+python3 demo_experiment.py
+
+# Run experiments with mock LLM
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --num-edits 5
 ```
 
-### Local Setup
+### Full Setup (GPU Required)
 ```bash
+# Docker setup
+docker build -t cke-framework:latest .
+docker run -it --ipc=host -p 8501:8501 --gpus all -v $(pwd):/app/CKE --name cke-container cke-framework:latest
+
+# Local setup
 conda create -n CKE python=3.9.7
 conda activate CKE
 pip install -r requirements.txt
+
+# Run with real models
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 ```
 
 ## Project Structure

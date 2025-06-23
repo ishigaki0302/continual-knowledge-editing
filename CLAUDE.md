@@ -152,15 +152,38 @@ src/
 ## Quick Start Commands
 
 ```bash
-# Test integration (requires dependencies installed)
-python3 run_experiment.py
+# Demo without GPU (basic dependencies only)
+python3 demo_experiment.py
 
-# Run specific experiments
-python3 -m src.experiments.rome_experiments
+# Run experiments with mock LLM (no GPU required)
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --num-edits 5
+python3 run_ckn_experiment.py --method MEMIT --model gpt2-xl --num-edits 3
+
+# Run with real models (requires GPU and full dependencies)
+python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model
 
 # Access EasyEdit directly
 python3 easyedit_base/edit.py
 ```
+
+## Experiment Framework Usage
+
+### Data Sampling
+The framework uses `temp_ckndata.json` for experimental data:
+- **5 subjects**: Ryoma Ishigaki, Jundai Suzuki, Shun Iwase, Reiya Hiramoto, Masato Sekiguchi
+- **Shared relations**: Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces (accumulative)
+- **Exclusive relations**: Health Status, Job, Residence, CurrentLocation, AgeGroup (overwrite)
+
+### Experimental Conditions
+- **Condition A**: Sequential editing across different subjects
+- **Condition B**: Multiple relation editing for the same subject  
+- **Condition C**: Object re-editing for the same (subject, relation) pair
+  - Shared relations: Accumulative behavior
+  - Exclusive relations: Overwrite behavior
+
+### Mock vs Real Experiments
+- **Mock mode** (default): No GPU required, simulated responses for testing pipeline
+- **Real mode** (`--real-model`): Requires GPU, uses actual EasyEdit models
 
 ## Research Extensions (Future Work)
 

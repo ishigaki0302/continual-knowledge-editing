@@ -1,0 +1,65 @@
+{
+    "subjects": [
+        "Ryoma Ishigaki",
+        "Jundai Suzuki",
+        "Shun Iwase",
+        "Reiya Hiramoto",
+        "Masato Sekiguchi"
+    ],
+    "SharedRelations": {
+        "TaskDescriptionPrompt": "Select all the correct answers to the question from the given options and list the corresponding numbers.\n###Question###\n[question]\n###Sample Answer###\nA: n, m, k\n###Answer Options###\n1. [object1]\n2. [object2]\n3. [object3]\n4. [object4]\n5. [object5]\n###Answer###\nA: ",
+        "Skills": {
+            "objects": ["Python", "SQL", "Java", "Excel", "HTML"],
+            "prompt": "[subject] is skilled in [object].",
+            "question": "Which skills does [subject] have?"
+        },
+        "Hobbies": {
+            "objects": ["Reading", "Hiking", "Cooking", "Gaming", "Photography"],
+            "prompt": "[subject] enjoys the hobby of [object].",
+            "question": "Which hobbies does [subject] enjoy?"
+        },
+        "LearnedLanguages": {
+            "objects": ["English", "Japanese", "Spanish", "French", "German"],
+            "prompt": "[subject] has learned the language [object].",
+            "question": "Which languages has [subject] learned?"
+        },
+        "ReadBooks": {
+            "objects": ["The Little Prince", "Harry Potter", "The Lord of the Rings", "The Chronicles of Narnia", "A Bear Called Paddington"],
+            "prompt": "[subject] has read the book titled [object].",
+            "question": "Which books has [subject] read?"
+        },
+        "VisitedPlaces": {
+            "objects": ["Paris", "New York", "Rome", "Seoul", "Cairo"],
+            "prompt": "[subject] has visited [object].",
+            "question": "Where has [subject] been?"
+        }
+    },
+    "ExclusiveRelations": {
+        "TaskDescriptionPrompt": "Select the correct answer to the question from the given options and list the corresponding single digit number.\n###Question###\n[question]\n###Sample Answer###\nA: n\n###Answer Options###\n1. [object1]\n2. [object2]\n3. [object3]\n4. [object4]\n5. [object5]\n###Answer###\nA: ",
+        "Health Status": {
+            "objects": ["Healthy", "Injured", "Allergic", "Diabetic", "Hypertensive"],
+            "prompt": "[subject] is currently experiencing the health status of [object].",
+            "question": "Which health statuses does [subject] have?"
+        },
+        "Job": {
+            "objects": ["Engineer", "Doctor", "Teacher", "Designer", "Lawyer"],
+            "prompt": "[subject] currently works as [object].",
+            "question": "Which jobs does [subject] have?"
+        },
+        "Residence": {
+            "objects": ["Sapporo", "Tokyo", "Nagoya", "Osaka", "Fukuoka"],
+            "prompt": "[subject] resides in [object].",
+            "question": "Which residences does [subject] reside in?"
+        },
+        "CurrentLocation": {
+            "objects": ["Home", "Office", "Library", "Restaurant", "Station"],
+            "prompt": "[subject] is currently located in [object].",
+            "question": "Where is [subject] currently located?"
+        },
+        "AgeGroup": {
+            "objects": ["20s", "30s", "40s", "50s", "60s"],
+            "prompt": "[subject] is in the [object] age group.",
+            "question": "What is [subject]'s age group?"
+        }
+    }
+}

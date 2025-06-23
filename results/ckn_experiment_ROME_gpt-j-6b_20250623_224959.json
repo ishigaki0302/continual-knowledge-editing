@@ -1,0 +1,61 @@
+{
+  "experiment_config": {
+    "method": "ROME",
+    "model_name": "gpt-j-6b",
+    "use_mock": true,
+    "timestamp": "2025-06-23T22:49:53.608699"
+  },
+  "conditions": {
+    "condition_a": {
+      "edit_sequence": [
+        {
+          "edit_id": "A_1",
+          "subject": "Jundai Suzuki",
+          "relation": "Residence",
+          "object": "Nagoya",
+          "prompt": "Jundai Suzuki resides in Nagoya.",
+          "question": "Which residences does Jundai Suzuki reside in?",
+          "relation_type": "exclusive",
+          "condition": "A"
+        },
+        {
+          "edit_id": "A_2",
+          "subject": "Ryoma Ishigaki",
+          "relation": "Residence",
+          "object": "Sapporo",
+          "prompt": "Ryoma Ishigaki resides in Sapporo.",
+          "question": "Which residences does Ryoma Ishigaki reside in?",
+          "relation_type": "exclusive",
+          "condition": "A"
+        },
+        {
+          "edit_id": "A_3",
+          "subject": "Masato Sekiguchi",
+          "relation": "Residence",
+          "object": "Nagoya",
+          "prompt": "Masato Sekiguchi resides in Nagoya.",
+          "question": "Which residences does Masato Sekiguchi reside in?",
+          "relation_type": "exclusive",
+          "condition": "A"
+        }
+      ],
+      "edit_results": [
+        {
+          "edit_data": {
+            "edit_id": "A_1",
+            "subject": "Jundai Suzuki",
+            "relation": "Residence",
+            "object": "Nagoya",
+            "prompt": "Jundai Suzuki resides in Nagoya.",
+            "question": "Which residences does Jundai Suzuki reside in?",
+            "relation_type": "exclusive",
+            "condition": "A"
+          },
+          "metrics": {
+            "efficacy": 0.7000712357183804,
+            "generalization": 0.6698337394214025,
+            "locality": 0.8811700838150961,
+            "portability": 0.4504580364187848,
+            "edit_success": true
+          },
+          "model": 
