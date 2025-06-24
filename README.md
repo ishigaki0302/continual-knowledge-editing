@@ -78,8 +78,14 @@ python3 run_ckn_experiment.py --method MEMIT --model gpt2-xl --real-model --num-
 ├── datasets/                  # 評価データセット
 │   └── temp_ckndata.json     # 実験用データ
 ├── results/                   # 実験結果 🆕
-│   └── ijcnlp_experiment_*.json # IJCNLP実験結果
+│   └── ckn_experiment_*.json  # CKE実験結果
+├── visualizations/            # 可視化結果 ✅
+│   ├── comprehensive_dashboard_*.png # 包括的ダッシュボード
+│   ├── method_comparison_*.png       # 手法比較
+│   ├── condition_analysis_*.png      # 条件別分析
+│   └── time_series_*.png            # 時系列分析
 ├── run_ckn_experiment.py     # 基本CKE実験実行スクリプト
+├── visualize_results.py      # 実験結果可視化スクリプト ✅
 ├── run_ijcnlp_experiment.py  # IJCNLP2025実験実行スクリプト 🆕
 └── demo_ijcnlp.py            # IJCNLP2025デモスクリプト 🆕
 ```
@@ -186,6 +192,21 @@ if results['ijcnlp_metrics']['localization_ratio'] > 0.7:
 "
 ```
 
+### 結果の可視化 ✅
+```bash
+# 包括的ダッシュボードの生成
+python3 visualize_results.py --dashboard-only
+
+# 全ての可視化を生成（手法比較、条件分析、時系列分析、ダッシュボード）
+python3 visualize_results.py
+
+# 特定のディレクトリから結果を読み込み
+python3 visualize_results.py --results-dir results --output-dir my_visualizations
+
+# 特定の実験の時系列分析
+python3 visualize_results.py --experiment ckn_experiment_ROME_gpt-j-6b_*
+```
+
 ### デモの実行
 ```bash
 # IJCNLP2025拡張機能のデモ 🆕
@@ -242,6 +263,34 @@ python3 run_ijcnlp_experiment.py --experiment-type order --real-model
 
 # 異なる手法での比較
 python3 run_ijcnlp_experiment.py --method MEMIT --experiment-type comprehensive
+```
+
+### 📊 `visualize_results.py` - 実験結果可視化スクリプト ✅
+**実験結果の包括的可視化**を行います。4種類の詳細な分析グラフを自動生成します。
+
+**主な機能：**
+- 手法別性能比較（効果性、局所性、精度）
+- 条件別詳細分析（A、B、C条件の比較）
+- 時系列編集効果分析（編集ステップごとの変化）
+- 包括的ダッシュボード（全指標の統合表示）
+- 自動推奨事項生成（最適手法の提案）
+
+**生成される可視化：**
+1. **Method Comparison**: 手法別メトリクス比較、散布図、ヒートマップ
+2. **Condition Analysis**: 条件別成功率、共有vs排他関係、相関分析
+3. **Time Series**: 編集ステップごとのメトリクス変化
+4. **Comprehensive Dashboard**: 統計サマリー、推奨事項、総合分析
+
+**使用例：**
+```bash
+# ダッシュボードのみ生成
+python3 visualize_results.py --dashboard-only
+
+# 全可視化生成
+python3 visualize_results.py --results-dir results --output-dir visualizations
+
+# 特定実験の分析
+python3 visualize_results.py --experiment ckn_experiment_ROME_*
 ```
 
 ### 🎮 `demo_ijcnlp.py` - IJCNLP2025拡張デモスクリプト 🆕
@@ -469,6 +518,8 @@ Retention_Score = α × Shared_Coverage + β × Exclusive_Accuracy
 - **バグ修正**: 型エラー、依存関係、JSON保存の問題解決 ✅
 - **実装修正**: SERACサポート問題、モデル名マッピング、メトリクス形式対応 ✅
 - **動作検証**: Mock/Real両モードでの完全動作確認完了 ✅
+- **可視化システム**: `visualize_results.py`による包括的結果可視化機能 ✅
+- **4種類の可視化**: 手法比較、条件分析、時系列分析、ダッシュボード ✅
 - **レガシーコード削除**: 古いファイル整理、構成最適化
 - **ドキュメント更新**: README全面改訂、機能説明追加 ✅
 
@@ -584,6 +635,10 @@ python3 run_ckn_experiment.py --method IKE --model gpt2-xl --num-edits 2     ✅
 
 # Real モード（GPU必要）
 python3 run_ckn_experiment.py --method ROME --model gpt-j-6b --real-model --num-edits 1  ✅
+
+# 可視化機能（追加実装）
+python3 visualize_results.py --dashboard-only                                           ✅
+python3 visualize_results.py                                                           ✅
 ```
 
 #### 実験結果例
@@ -606,6 +661,8 @@ Condition accuracies:
 - **データ形式**: `temp_ckndata.json`の構造検証完了
 - **評価パイプライン**: 条件A、B、Cの完全実行確認
 - **結果保存**: JSON形式での詳細結果出力確認
+- **可視化機能**: 4種類の包括的分析グラフ生成確認
+- **生成ファイル**: PNG形式での高解像度可視化出力確認
 
 ### トラブルシューティング
 
