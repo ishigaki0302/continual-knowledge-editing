@@ -31,7 +31,22 @@ class EasyEditWrapper:
         
     def initialize_editor(self):
         """Initialize the knowledge editor"""
-        hparams_path = f"easyedit_base/hparams/{self.method}/{self.model_name}.yaml"
+        # Map model names to correct file names
+        model_name_map = {
+            'gpt-j-6b': 'gpt-j-6B',
+            'gpt2-xl': 'gpt2-xl',
+            'llama-7b': 'llama-7b',
+            'llama3-8b': 'llama3-8b',
+            'llama3.2-3b': 'llama3.2-3b',
+            'qwen-7b': 'qwen-7b',
+            'qwen2-7b': 'qwen2-7b',
+            'qwen2.5-7b': 'qwen2.5-7b',
+            'chatglm2-6b': 'chatglm2-6b',
+            'chatglm4-9b': 'chatglm4-9b',
+        }
+        
+        file_model_name = model_name_map.get(self.model_name, self.model_name)
+        hparams_path = f"easyedit_base/hparams/{self.method}/{file_model_name}.yaml"
         
         if self.method == "ROME":
             self.hparams = ROMEHyperParams.from_hparams(hparams_path)
@@ -46,7 +61,8 @@ class EasyEditWrapper:
         elif self.method == "KN":
             self.hparams = KNHyperParams.from_hparams(hparams_path)
         elif self.method == "SERAC":
-            self.hparams = SERACHyperParams.from_hparams(hparams_path)
+            # SERAC support not available in current EasyEdit version
+            raise ValueError(f"SERAC method is not currently supported")
         else:
             raise ValueError(f"Unsupported method: {self.method}")
         
