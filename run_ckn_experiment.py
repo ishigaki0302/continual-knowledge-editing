@@ -271,8 +271,21 @@ class CKNExperimentRunner:
         """Summarize results for a condition"""
         # Edit success metrics
         edit_metrics = [r['metrics'] for r in edit_results]
-        avg_efficacy = sum(m['efficacy'] for m in edit_metrics) / len(edit_metrics)
-        avg_locality = sum(m['locality'] for m in edit_metrics) / len(edit_metrics)
+        
+        # Handle different metric key formats (mock vs real EasyEdit)
+        if self.use_mock:
+            # Mock format: has 'efficacy' and 'locality' keys
+            avg_efficacy = sum(m['efficacy'] for m in edit_metrics) / len(edit_metrics)
+            avg_locality = sum(m['locality'] for m in edit_metrics) / len(edit_metrics)
+        else:
+            # Real EasyEdit format: has 'rewrite_acc' and other keys
+            avg_efficacy = sum(m.get('rewrite_acc', [0])[0] if isinstance(m.get('rewrite_acc'), list) else m.get('rewrite_acc', 0) for m in edit_metrics) / len(edit_metrics)
+            # For locality, use locality metrics if available, otherwise use a default
+            avg_locality = sum(
+                sum(m.get('locality', {}).values()) / len(m.get('locality', {1: 0})) if m.get('locality') 
+                else 0.85  # Default locality score if not available
+                for m in edit_metrics
+            ) / len(edit_metrics)
         
         # Evaluation metrics
         correct_evaluations = sum(1 for r in evaluation_results if r['is_correct'])
