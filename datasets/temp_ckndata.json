@@ -58,7 +58,7 @@
         },
         "AgeGroup": {
             "objects": ["20s", "30s", "40s", "50s", "60s"],
-            "prompt": "[subject] is in the [object] age group.",
+            "prompt": "[subject] belongs to the age group [object].",
             "question": "What is [subject]'s age group?"
         }
     }
