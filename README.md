@@ -1,26 +1,26 @@
 # 継続知識編集 (CKE) フレームワーク
 
-このリポジトリは、EasyEditフレームワークをベースとした大規模言語モデルにおける**継続知識編集（CKE）**の実験コードを実装しています。
+このリポジトリは、EasyEditフレームワークをベースとした大規模言語モデルにおける「継続知識編集（CKE）」の実験コードを実装しています。
 複数の実験条件を用いて、逐次的な知識編集操作の複雑さと効果を評価することに焦点を当てています。
 
 ## 研究概要
 
 ### 主要な革新
-- 知識挿入・修正の精密なセマンティック制御のための**「共有」**および**「排他」**Relationタイプの導入
+- 知識挿入・修正の精密なセマンティック制御のための「共有」および「排他」Relationタイプの導入
 - LLMにおける継続知識編集のための包括的評価フレームワーク
 - 知識保持と干渉パターンを分析するマルチ条件実験設計
 - 暗黙的vs明示的編集やエンティティ類似度効果を含むIJCNLP2025拡張分析
 
 ### Relationタイプ
-- **共有Relation**：（Subject、Relation）ペアに対して複数のObjectを許可（蓄積的セマンティクス）
+- 共有Relation：（Subject、Relation）ペアに対して複数のObjectを許可（蓄積的セマンティクス）
   - 例：Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces
-- **排他Relation**：（Subject、Relation）ペアに対して1つのObjectのみを許可（上書きセマンティクス）
+- 排他Relation：（Subject、Relation）ペアに対して1つのObjectのみを許可（上書きセマンティクス）
   - 例：HealthStatus, Job, Residence, CurrentLocation, AgeGroup
 
 ### 評価条件
-1. **条件A**：異なるSubjectでの逐次編集
-2. **条件B**：同一Subjectでの複数Relation編集
-3. **条件C**：同一（Subject、Relation）ペアでのObject再編集
+1. 条件A：異なるSubjectでの逐次編集
+2. 条件B：同一Subjectでの複数Relation編集
+3. 条件C：同一（Subject、Relation）ペアでのObject再編集
    - 共有Relation：蓄積的動作
    - 排他Relation：上書き動作
 
