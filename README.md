@@ -178,8 +178,8 @@ python3 plot_knowledge_editing.py \
 ## ベースフレームワーク
 [EasyEdit](https://github.com/zjunlp/EasyEdit/tree/main)をベースに構築 - 大規模言語モデルのための使いやすい知識編集フレームワーク
 
-## 依存Relation
-主要な依存Relation（完全なリストは`requirements.txt`を参照）：
+## 依存関係
+主要な依存関係（完全なリストは`requirements.txt`を参照）：
 - `transformers==4.46.2`, `torch==2.0.1`, `peft==0.7.1`
 - `sentence-transformers==3.2.1`, `einops==0.4.0`
 - `matplotlib==3.5.1`, `scikit-learn==1.0.2`
