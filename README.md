@@ -1,39 +1,40 @@
 # 継続知識編集 (CKE) フレームワーク
 
-このリポジトリは、EasyEditフレームワークをベースとした大規模言語モデルにおける**継続知識編集（CKE）**の実験コードを実装しています。複数の実験条件を用いて、逐次的な知識編集操作の複雑さと効果を評価することに焦点を当てています。
+このリポジトリは、EasyEditフレームワークをベースとした大規模言語モデルにおける**継続知識編集（CKE）**の実験コードを実装しています。
+複数の実験条件を用いて、逐次的な知識編集操作の複雑さと効果を評価することに焦点を当てています。
 
 ## 研究概要
 
 ### 主要な革新
-- 知識挿入・修正の精密なセマンティック制御のための**「共有」**および**「排他」**関係タイプの導入
+- 知識挿入・修正の精密なセマンティック制御のための**「共有」**および**「排他」**Relationタイプの導入
 - LLMにおける継続知識編集のための包括的評価フレームワーク
 - 知識保持と干渉パターンを分析するマルチ条件実験設計
 - 暗黙的vs明示的編集やエンティティ類似度効果を含むIJCNLP2025拡張分析
 
-### 関係タイプ
-- **共有関係**：（主語、関係）ペアに対して複数のオブジェクトを許可（蓄積的セマンティクス）
+### Relationタイプ
+- **共有Relation**：（Subject、Relation）ペアに対して複数のObjectを許可（蓄積的セマンティクス）
   - 例：Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces
-- **排他関係**：（主語、関係）ペアに対して1つのオブジェクトのみを許可（上書きセマンティクス）
+- **排他Relation**：（Subject、Relation）ペアに対して1つのObjectのみを許可（上書きセマンティクス）
   - 例：HealthStatus, Job, Residence, CurrentLocation, AgeGroup
 
 ### 評価条件
-1. **条件A**：異なる主語での逐次編集
-2. **条件B**：同一主語での複数関係編集
-3. **条件C**：同一（主語、関係）ペアでのオブジェクト再編集
-   - 共有関係：蓄積的動作
-   - 排他関係：上書き動作
+1. **条件A**：異なるSubjectでの逐次編集
+2. **条件B**：同一Subjectでの複数Relation編集
+3. **条件C**：同一（Subject、Relation）ペアでのObject再編集
+   - 共有Relation：蓄積的動作
+   - 排他Relation：上書き動作
 
 ## クイックスタート
 
 ### 基本的な知識編集（GPU必要）
 ```bash
-# 条件A：異なる主語
+# 条件A：異なるSubject
 python3 run_knowledge_editing.py --method ROME --model gpt-j-6b --condition A --num-edits 5
 
-# 条件B：同一主語、異なる関係
+# 条件B：同一Subject、異なるRelation
 python3 run_knowledge_editing.py --method ROME --model gpt-j-6b --condition B --num-edits 5
 
-# 条件C：同一主語-関係、異なるオブジェクト
+# 条件C：同一Subject-Relation、異なるObject
 python3 run_knowledge_editing.py --method ROME --model gpt-j-6b --condition C --num-edits 5
 ```
 
@@ -79,7 +80,7 @@ pip install -r requirements.txt
 
 ```
 ├── datasets/
-│   └── temp_ckndata.json            # 5つの主語と関係を含む実験データ
+│   └── temp_ckndata.json            # 5つのSubjectとRelationを含む実験データ
 ├── easyedit_base/                   # EasyEditフレームワーク統合
 │   ├── easyeditor/                  # EasyEditコアモジュール
 │   ├── hparams/                     # 手法設定（ROME, MEMIT等）
@@ -95,24 +96,24 @@ pip install -r requirements.txt
 ├── run_knowledge_editing.py         # メイン実験実行スクリプト
 ├── plot_knowledge_editing.py        # 結果可視化
 ├── demo_ijcnlp.py                  # IJCNLP2025機能デモ
-└── requirements.txt                 # Python依存関係
+└── requirements.txt                 # Python依存Relation
 ```
 
 ## 実験フレームワーク
 
 ### データセット（`datasets/temp_ckndata.json`）
-フレームワークは実験用に5つの架空の主語を使用：
+フレームワークは実験用に5つの架空のSubjectを使用：
 - **Ryoma Ishigaki**
 - **Jundai Suzuki**
 - **Shun Iwase**
 - **Reiya Hiramoto**
 - **Masato Sekiguchi**
 
-### 関係カテゴリ
-- **共有関係**（蓄積的）：Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces
-- **排他関係**（上書き）：HealthStatus, Job, Residence, CurrentLocation, AgeGroup
+### Relationカテゴリ
+- **共有Relation**（蓄積的）：Skills, Hobbies, LearnedLanguages, ReadBooks, VisitedPlaces
+- **排他Relation**（上書き）：HealthStatus, Job, Residence, CurrentLocation, AgeGroup
 
-各関係は5つの可能なオブジェクトと、体系的評価のための定義されたプロンプト/質問テンプレートを持ちます。
+各Relationは5つの可能なObjectと、体系的評価のための定義されたプロンプト/質問テンプレートを持ちます。
 
 ### 主要実装ファイル
 
@@ -125,9 +126,9 @@ pip install -r requirements.txt
 
 #### `src/experiments/data_sampler.py`
 データサンプリングロジックで以下を実装：
-- **条件A**：編集ごとに異なる主語
-- **条件B**：同一主語、異なる関係
-- **条件C**：同一主語-関係、異なるオブジェクト（共有/排他バリアント）
+- **条件A**：編集ごとに異なるSubject
+- **条件B**：同一Subject、異なるRelation
+- **条件C**：同一Subject-Relation、異なるObject（共有/排他バリアント）
 - 選択肢形式での評価プロンプト生成
 
 #### `src/utils/easyedit_wrapper.py`
@@ -139,16 +140,16 @@ EasyEdit統合で以下を提供：
 ## 評価指標
 
 ### 主要指標
-- **効果性**：知識編集の成功率（対象オブジェクトが最高確率を持つ）
+- **効果性**：知識編集の成功率（対象Objectが最高確率を持つ）
 - **編集後分析**：各編集後の確率分布
 - **最終状態分析**：全編集の累積効果
-- **ランキング分析**：対象オブジェクトの順位変化
+- **ランキング分析**：対象Objectの順位変化
 
 ### 結果可視化
 `plot_knowledge_editing.py`を使用して以下を生成：
 - 編集後vs最終状態の確率比較
 - 全条件・編集ステップを示す6×Nグリッド
-- 対象オブジェクトのハイライトと確率追跡
+- 対象Objectのハイライトと確率追跡
 
 ```bash
 # 結果から可視化を生成
@@ -177,8 +178,8 @@ python3 plot_knowledge_editing.py \
 ## ベースフレームワーク
 [EasyEdit](https://github.com/zjunlp/EasyEdit/tree/main)をベースに構築 - 大規模言語モデルのための使いやすい知識編集フレームワーク
 
-## 依存関係
-主要な依存関係（完全なリストは`requirements.txt`を参照）：
+## 依存Relation
+主要な依存Relation（完全なリストは`requirements.txt`を参照）：
 - `transformers==4.46.2`, `torch==2.0.1`, `peft==0.7.1`
 - `sentence-transformers==3.2.1`, `einops==0.4.0`
 - `matplotlib==3.5.1`, `scikit-learn==1.0.2`
