@@ -103,7 +103,7 @@ class EasyEditWrapper:
                 subject = [subject]
             edit_data['subject'] = subject
             
-        metrics, edited_model, _ = self.editor.edit(**edit_data)
+        metrics, edited_model, _ = self.editor.edit(sequential_edit=True, **edit_data)
 
         return metrics[0]["post"], edited_model
     
