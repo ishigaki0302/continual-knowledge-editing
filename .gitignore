@@ -162,6 +162,12 @@ MEND_setup/results/models/
 data/stats/
 *.npz
 *.arrow
+*.bk
+*.incomplete
+
+# EasyEdit data files
+easyedit_base/data/zsre/relation_splits/
+easyedit_base/data/zsre/relation_splits.tar.bz2
 
 execution_*
 run_all*
