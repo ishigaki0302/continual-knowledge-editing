@@ -157,5 +157,11 @@ models/
 cache/
 backups/
 
+# Large model files and data
+MEND_setup/results/models/
+data/stats/
+*.npz
+*.arrow
+
 execution_*
 run_all*
