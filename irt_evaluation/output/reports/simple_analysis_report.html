@@ -1,0 +1,149 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>継続的知識編集 評価レポート</title>
+        <meta charset="UTF-8">
+        <style>
+            body { font-family: 'Yu Gothic', 'Hiragino Sans', Arial, sans-serif; margin: 40px; }
+            .header { background-color: #f0f0f0; padding: 20px; border-radius: 5px; }
+            .section { margin: 30px 0; }
+            .metric { background-color: #f9f9f9; padding: 10px; margin: 10px 0; border-left: 4px solid #007acc; }
+            table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            .highlight { background-color: #fff3cd; padding: 5px; border-radius: 3px; }
+            .matrix { font-family: monospace; }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>継続的知識編集 評価レポート</h1>
+            <p>Continual Knowledge Editing Performance Analysis</p>
+        </div>
+        
+        <div class="section">
+            <h2>📊 分析サマリー</h2>
+            <div class="metric">
+                <p><strong>総観測数:</strong> 12,000</p>
+                <p><strong>分析手法:</strong> MEMIT, ROME</p>
+                <p><strong>分析モデル:</strong> gpt-j-6b, gpt2-xl</p>
+                <p><strong>編集タイプ:</strong> タイプcondition</p>
+            </div>
+            
+            <div class="metric">
+                <h3>🎯 全体的性能</h3>
+                <p><strong>即時反応成功率:</strong> 0.991 (99.1%)</p>
+                <p><strong>累積反応成功率:</strong> 0.706 (70.6%)</p>
+                <p class="highlight"><strong>性能劣化度:</strong> 0.285 (28.5%)</p>
+                <p><strong>平均確率変化:</strong> 0.284</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔧 手法別比較</h2>
+            <table>
+                <tr>
+                    <th>手法 (Method)</th>
+                    <th>即時反応成功率</th>
+                    <th>累積反応成功率</th>
+                    <th>確率変化</th>
+                </tr>
+                <tr>
+                    <td><strong>MEMIT</strong></td>
+                    <td>0.984</td>
+                    <td>0.851</td>
+                    <td>0.135</td>
+                </tr>
+                <tr>
+                    <td><strong>ROME</strong></td>
+                    <td>0.999</td>
+                    <td>0.561</td>
+                    <td>0.434</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>🤖 モデル別比較</h2>
+            <table>
+                <tr>
+                    <th>モデル (Model)</th>
+                    <th>即時反応成功率</th>
+                    <th>累積反応成功率</th>
+                    <th>確率変化</th>
+                </tr>
+                <tr>
+                    <td><strong>gpt-j-6b</strong></td>
+                    <td>0.999</td>
+                    <td>0.935</td>
+                    <td>0.076</td>
+                </tr>
+                <tr>
+                    <td><strong>gpt2-xl</strong></td>
+                    <td>0.984</td>
+                    <td>0.477</td>
+                    <td>0.492</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>📝 編集タイプ別比較</h2>
+            <table>
+                <tr>
+                    <th>編集タイプ (Edit Type)</th>
+                    <th>即時反応成功率</th>
+                    <th>累積反応成功率</th>
+                    <th>確率変化</th>
+                </tr>
+                <tr>
+                    <td><strong>タイプcondition</strong></td>
+                    <td>0.991</td>
+                    <td>0.706</td>
+                    <td>0.284</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>📈 反応タイプ別比較</h2>
+            <div class="metric">
+                <h3>即時反応 (Immediate Response)</h3>
+                <p><strong>平均成功率:</strong> 0.991</p>
+                <p><strong>平均確率:</strong> 0.902</p>
+            </div>
+            <div class="metric">
+                <h3>累積反応 (Cumulative Response)</h3>
+                <p><strong>平均成功率:</strong> 0.706</p>
+                <p><strong>平均確率:</strong> 0.618</p>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🔍 主要な発見</h2>
+            <ul>
+                <li><strong>即時反応成功率:</strong> 99.1%</li>
+                <li><strong>累積反応成功率:</strong> 70.6%</li>
+                <li><strong>性能劣化:</strong> 28.5%</li>
+                <li><strong>最良手法:</strong> MEMIT</li>
+                <li><strong>最困難編集タイプ:</strong> タイプcondition</li>
+            </ul>
+        </div>
+        
+        <div class="section">
+            <h2>📊 生成された可視化</h2>
+            <ul>
+                <li>編集タイプ別成功率 (success_rates_by_edit_type.png)</li>
+                <li>手法別成功率 (success_rates_by_method.png)</li>
+                <li>モデル別成功率 (success_rates_by_model.png)</li>
+                <li>手法×モデル 性能マトリックス (method_model_matrix.png)</li>
+                <li>詳細分析マトリックス (detailed_analysis_matrices.png)</li>
+                <li>確率分布 (probability_distributions.png)</li>
+                <li>確率変化分布 (probability_changes.png)</li>
+                <li>編集順序効果 (performance_by_edit_order.png)</li>
+            </ul>
+        </div>
+    </body>
+    </html>
+    

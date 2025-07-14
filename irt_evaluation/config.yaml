@@ -1,5 +1,5 @@
-# IRT-based Knowledge Editing Evaluation System Configuration
-# This file contains default parameters and settings for the IRT evaluation pipeline
+# Comprehensive IRT-based Knowledge Editing Evaluation System Configuration
+# This file contains parameters and settings for the comprehensive IRT evaluation pipeline
 
 # Data Loading Configuration
 data_loading:
@@ -8,6 +8,9 @@ data_loading:
   
   # Default encoding for text files
   encoding: 'utf-8'
+  
+  # Results directory path
+  results_directory: '/app/EasyEdit/results'
   
   # Data validation settings
   validation:
@@ -22,6 +25,28 @@ data_loading:
     max_missing_rate: 0.1  # Maximum 10% missing values
     min_response_rate: 0.5  # Minimum 50% response rate
     max_outlier_rate: 0.05  # Maximum 5% outliers
+
+# Comprehensive Analysis Configuration
+comprehensive_analysis:
+  # Enable different analysis components
+  components:
+    irt_analysis: true
+    continuous_probability_analysis: true
+    immediate_vs_cumulative: true
+    condition_effects: true
+    method_performance: true
+    visualization: true
+    reporting: true
+  
+  # Analysis depth
+  analysis_depth: 'comprehensive'  # Options: 'basic', 'standard', 'comprehensive'
+  
+  # Include advanced metrics
+  advanced_metrics:
+    parameter_correlations: true
+    item_information_functions: true
+    person_fit_statistics: true
+    model_comparison: true
 
 # Data Conversion Configuration
 data_conversion:
