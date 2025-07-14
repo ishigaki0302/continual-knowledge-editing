@@ -146,8 +146,9 @@ Thumbs.db
 
 # Project specific
 results/
+results_backup/
 *.json
-!datasets/*.json
+# !datasets/*.json
 !easyedit_base/examples/*.json
 temp_*/
 logs/
@@ -155,3 +156,6 @@ checkpoints/
 models/
 cache/
 backups/
+
+execution_*
+run_all*

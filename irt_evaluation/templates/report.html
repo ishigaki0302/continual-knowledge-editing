@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IRT Analysis Report - Knowledge Editing Evaluation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        .header { background-color: #f4f4f4; padding: 20px; border-radius: 5px; }
+        .section { margin: 20px 0; }
+        .subsection { margin: 15px 0; }
+        .table-container { overflow-x: auto; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .highlight { background-color: #fffacd; }
+        .figure { text-align: center; margin: 20px 0; }
+        .figure img { max-width: 100%; height: auto; }
+        .interpretation { background-color: #f0f8ff; padding: 15px; border-radius: 5px; }
+        .recommendation { background-color: #f0fff0; padding: 15px; border-radius: 5px; }
+        .warning { background-color: #fff0f0; padding: 15px; border-radius: 5px; }
+        .metric { display: inline-block; margin: 10px; padding: 10px; background-color: #e9ecef; border-radius: 5px; }
+        .footer { margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>IRT Analysis Report</h1>
+        <h2>Knowledge Editing Evaluation</h2>
+        <p><strong>Generated:</strong> {{ timestamp }}</p>
+        <p><strong>Model:</strong> {{ model_info.model_type }} | <strong>Persons:</strong> {{ model_info.n_persons }} | <strong>Items:</strong> {{ model_info.n_items }}</p>
+    </div>
+
+    <div class="section">
+        <h2>Executive Summary</h2>
+        <div class="subsection">
+            <h3>Key Findings</h3>
+            <ul>
+                {% for finding in key_findings %}
+                <li>{{ finding }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="subsection">
+            <h3>Performance Metrics</h3>
+            {% for metric in performance_metrics %}
+            <div class="metric">
+                <strong>{{ metric.name }}:</strong> {{ metric.value }}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Model Information</h2>
+        <div class="table-container">
+            <table>
+                <tr><th>Parameter</th><th>Value</th></tr>
+                <tr><td>Model Type</td><td>{{ model_info.model_type }}</td></tr>
+                <tr><td>Estimation Method</td><td>{{ model_info.estimation_method }}</td></tr>
+                <tr><td>Number of Persons</td><td>{{ model_info.n_persons }}</td></tr>
+                <tr><td>Number of Items</td><td>{{ model_info.n_items }}</td></tr>
+                <tr><td>Number of Observations</td><td>{{ model_info.n_observations }}</td></tr>
+                <tr><td>Converged</td><td>{{ model_info.converged }}</td></tr>
+                <tr><td>Iterations</td><td>{{ model_info.n_iterations }}</td></tr>
+                <tr><td>Log-Likelihood</td><td>{{ "%.2f"|format(model_info.log_likelihood) }}</td></tr>
+                <tr><td>AIC</td><td>{{ "%.2f"|format(model_info.aic) }}</td></tr>
+                <tr><td>BIC</td><td>{{ "%.2f"|format(model_info.bic) }}</td></tr>
+            </table>
+        </div>
+    </div>
+
+    {% if parameter_summary %}
+    <div class="section">
+        <h2>Parameter Summary</h2>
+        {% for param_name, param_data in parameter_summary.items() %}
+        <div class="subsection">
+            <h3>{{ param_data.label }}</h3>
+            <div class="table-container">
+                <table>
+                    <tr><th>Statistic</th><th>Value</th></tr>
+                    <tr><td>Mean</td><td>{{ "%.3f"|format(param_data.mean) }}</td></tr>
+                    <tr><td>Standard Deviation</td><td>{{ "%.3f"|format(param_data.std) }}</td></tr>
+                    <tr><td>Minimum</td><td>{{ "%.3f"|format(param_data.min) }}</td></tr>
+                    <tr><td>Maximum</td><td>{{ "%.3f"|format(param_data.max) }}</td></tr>
+                    <tr><td>Median</td><td>{{ "%.3f"|format(param_data.median) }}</td></tr>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if method_comparison %}
+    <div class="section">
+        <h2>Method Comparison</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Method</th>
+                    <th>Mean Ability (θ)</th>
+                    <th>Std. Dev.</th>
+                    <th>N Persons</th>
+                    <th>Rank</th>
+                </tr>
+                {% for method in method_comparison %}
+                <tr {% if method.rank == 1 %}class="highlight"{% endif %}>
+                    <td>{{ method.method }}</td>
+                    <td>{{ "%.3f"|format(method.mean_theta) }}</td>
+                    <td>{{ "%.3f"|format(method.std_theta) }}</td>
+                    <td>{{ method.n_persons }}</td>
+                    <td>{{ method.rank }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if condition_analysis %}
+    <div class="section">
+        <h2>Condition Analysis</h2>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th>Condition</th>
+                    <th>Mean Difficulty (β)</th>
+                    <th>Std. Dev.</th>
+                    <th>N Items</th>
+                    <th>Interpretation</th>
+                </tr>
+                {% for condition in condition_analysis %}
+                <tr>
+                    <td>{{ condition.condition }}</td>
+                    <td>{{ "%.3f"|format(condition.mean_beta) }}</td>
+                    <td>{{ "%.3f"|format(condition.std_beta) }}</td>
+                    <td>{{ condition.n_items }}</td>
+                    <td>{{ condition.interpretation }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if interpretations %}
+    <div class="section">
+        <h2>Interpretations</h2>
+        {% for interpretation in interpretations %}
+        <div class="interpretation">
+            <h3>{{ interpretation.title }}</h3>
+            <p>{{ interpretation.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if recommendations %}
+    <div class="section">
+        <h2>Recommendations</h2>
+        {% for recommendation in recommendations %}
+        <div class="recommendation">
+            <h3>{{ recommendation.title }}</h3>
+            <p>{{ recommendation.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if figures %}
+    <div class="section">
+        <h2>Figures</h2>
+        {% for figure in figures %}
+        <div class="figure">
+            <h3>{{ figure.title }}</h3>
+            <img src="{{ figure.path }}" alt="{{ figure.title }}">
+            <p><em>{{ figure.caption }}</em></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="footer">
+        <p>Report generated by IRT Knowledge Editing Evaluation System</p>
+        <p>Generated on {{ timestamp }}</p>
+    </div>
+</body>
+</html>
+        

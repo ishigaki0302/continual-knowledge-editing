@@ -23,9 +23,10 @@ from easyeditor import (
 class EasyEditWrapper:
     """Wrapper for EasyEdit functionality"""
     
-    def __init__(self, method="ROME", model_name="gpt-j-6b"):
+    def __init__(self, method="ROME", model_name="gpt-j-6b", device="cuda:0"):
         self.method = method
         self.model_name = model_name
+        self.device = device
         self.editor = None
         self.hparams = None
         
@@ -66,7 +67,26 @@ class EasyEditWrapper:
         else:
             raise ValueError(f"Unsupported method: {self.method}")
         
+        # Set device in hparams - handle both string and numeric device specifications
+        if hasattr(self.hparams, 'device'):
+            if self.device.startswith('cuda:'):
+                # Extract device number from cuda:X format
+                device_num = int(self.device.split(':')[1])
+                self.hparams.device = device_num
+            else:
+                self.hparams.device = self.device
+        
         self.editor = BaseEditor.from_hparams(self.hparams)
+        
+        # Ensure model is on the correct device
+        if hasattr(self.editor, 'model') and self.editor.model is not None:
+            if not self.hparams.model_parallel:  # Only move to device if not using model parallel
+                self.editor.model = self.editor.model.to(self.device)
+                
+        # Also ensure tokenizer is set up properly
+        if hasattr(self.editor, 'tok') and self.editor.tok is not None:
+            # Some tokenizers may need device configuration too
+            pass
         
     def edit_model(self, prompts, ground_truth, target_new, subject=None, edit_id=None):
         """

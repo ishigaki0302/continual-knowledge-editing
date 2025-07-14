@@ -1,0 +1,365 @@
+# IRT-based Knowledge Editing Evaluation System Configuration
+# This file contains default parameters and settings for the IRT evaluation pipeline
+
+# Data Loading Configuration
+data_loading:
+  # Supported file formats
+  supported_formats: ['json', 'csv', 'tsv']
+  
+  # Default encoding for text files
+  encoding: 'utf-8'
+  
+  # Data validation settings
+  validation:
+    enabled: true
+    check_missing_values: true
+    check_data_types: true
+    min_persons: 2
+    min_items: 3
+    
+  # Data quality thresholds
+  quality_thresholds:
+    max_missing_rate: 0.1  # Maximum 10% missing values
+    min_response_rate: 0.5  # Minimum 50% response rate
+    max_outlier_rate: 0.05  # Maximum 5% outliers
+
+# Data Conversion Configuration
+data_conversion:
+  # Response scoring method
+  score_type: 'binary'  # Options: 'binary', 'probability', 'rank'
+  
+  # Probability threshold for binary scoring
+  probability_threshold: 0.5
+  
+  # Include cumulative response analysis
+  include_cumulative: true
+  
+  # Response types to analyze
+  response_types: ['immediate', 'cumulative']
+  
+  # Person ID format: {method}_{model}
+  person_id_format: '{method}_{model_name}'
+  
+  # Item ID format: {condition}_{sample}_{order}
+  item_id_format: '{condition}_{sample_index}_{edit_order}'
+
+# IRT Model Configuration
+irt_model:
+  # Default model type
+  model_type: '2PL'  # Options: '1PL', '2PL', '3PL'
+  
+  # Estimation method
+  estimation_method: 'EM'  # Options: 'EM', 'MCMC', 'MLE'
+  
+  # Convergence criteria
+  convergence:
+    max_iterations: 1000
+    threshold: 1e-6
+    
+  # Parameter bounds
+  parameter_bounds:
+    theta: [-4, 4]      # Person ability bounds
+    beta: [-3, 3]       # Item difficulty bounds
+    alpha: [0.1, 3.0]   # Discrimination bounds
+    gamma: [0.0, 1.0]   # Guessing parameter bounds
+  
+  # Prior distributions (for Bayesian estimation)
+  priors:
+    theta:
+      distribution: 'normal'
+      mean: 0
+      std: 1
+    beta:
+      distribution: 'normal'
+      mean: 0
+      std: 1
+    alpha:
+      distribution: 'lognormal'
+      mean: 0
+      std: 0.5
+
+# Model Comparison Configuration
+model_comparison:
+  # Models to compare
+  models_to_compare: ['1PL', '2PL', '3PL']
+  
+  # Comparison criteria
+  criteria: ['aic', 'bic', 'log_likelihood']
+  
+  # Model selection method
+  selection_method: 'aic'  # Options: 'aic', 'bic', 'cross_validation'
+
+# Visualization Configuration
+visualization:
+  # Default figure settings
+  figure:
+    size: [10, 8]
+    dpi: 300
+    format: 'png'  # Options: 'png', 'pdf', 'svg'
+    style: 'seaborn-v0_8-whitegrid'
+  
+  # Color schemes
+  colors:
+    primary: '#2E86AB'
+    secondary: '#A23B72'
+    accent: '#F18F01'
+    success: '#C73E1D'
+    neutral: '#6C7B7F'
+  
+  # Method-specific colors
+  method_colors:
+    ROME: '#2E86AB'
+    MEMIT: '#A23B72'
+    MEND: '#F18F01'
+    FT: '#C73E1D'
+    IKE: '#6C7B7F'
+    KN: '#8B5A2B'
+  
+  # Condition-specific colors
+  condition_colors:
+    A: '#2E86AB'
+    B: '#A23B72'
+    C: '#F18F01'
+  
+  # ICC curve settings
+  icc:
+    theta_range: [-4, 4]
+    n_points: 100
+    max_items_per_plot: 10
+  
+  # Plot types to generate
+  plot_types:
+    - 'icc'
+    - 'parameter_distributions'
+    - 'person_item_map'
+    - 'method_performance'
+    - 'condition_analysis'
+    - 'summary_dashboard'
+
+# Reporting Configuration
+reporting:
+  # Default report format
+  format: 'html'  # Options: 'html', 'pdf', 'latex'
+  
+  # Template settings
+  templates:
+    directory: 'templates'
+    main_template: 'report.html'
+  
+  # Report sections to include
+  sections:
+    - 'executive_summary'
+    - 'model_information'
+    - 'parameter_summary'
+    - 'method_comparison'
+    - 'condition_analysis'
+    - 'interpretations'
+    - 'recommendations'
+    - 'figures'
+  
+  # Publication table settings
+  tables:
+    format: 'csv'  # Options: 'csv', 'latex', 'html'
+    precision: 3    # Decimal places for numerical values
+    
+  # Statistical significance settings
+  statistics:
+    alpha_level: 0.05
+    confidence_level: 0.95
+    effect_size_thresholds:
+      small: 0.2
+      medium: 0.5
+      large: 0.8
+
+# Experimental Design Configuration
+experimental_design:
+  # Known methods for analysis
+  methods: ['ROME', 'MEMIT', 'MEND', 'FT', 'IKE', 'KN']
+  
+  # Known models for analysis
+  models: ['gpt-j-6b', 'gpt2-xl', 'llama-7b', 'llama3-8b', 'llama3.2-3b']
+  
+  # Known conditions for analysis
+  conditions: ['A', 'B', 'C']
+  
+  # Relation types
+  relation_types:
+    shared: ['Skills', 'Hobbies', 'LearnedLanguages', 'ReadBooks', 'VisitedPlaces']
+    exclusive: ['HealthStatus', 'Job', 'Residence', 'CurrentLocation', 'AgeGroup']
+  
+  # Expected data structure
+  expected_columns:
+    required: ['method', 'model_name', 'condition', 'sample_index', 'edit_order', 
+               'subject', 'relation', 'object', 'target_probability', 'target_rank', 'is_correct']
+    optional: ['relation_type', 'candidates', 'probabilities', 'source_file']
+
+# Output Configuration
+output:
+  # Default output directories
+  directories:
+    results: 'irt_results'
+    figures: 'figures'
+    reports: 'reports'
+    tables: 'tables'
+    logs: 'logs'
+  
+  # File naming conventions
+  naming:
+    timestamp_format: '%Y%m%d_%H%M%S'
+    results_prefix: 'irt_results'
+    figures_prefix: 'figure'
+    reports_prefix: 'report'
+    tables_prefix: 'table'
+  
+  # File formats
+  formats:
+    data: 'csv'
+    results: 'json'
+    figures: 'png'
+    reports: 'html'
+    tables: 'csv'
+
+# Performance Configuration
+performance:
+  # Memory management
+  memory:
+    chunk_size: 10000  # Process data in chunks
+    max_memory_gb: 8   # Maximum memory usage
+  
+  # Parallel processing
+  parallel:
+    enabled: true
+    n_jobs: -1  # Use all available cores
+    backend: 'threading'  # Options: 'threading', 'multiprocessing'
+  
+  # Caching
+  cache:
+    enabled: true
+    directory: '.cache'
+    max_size_mb: 1000
+
+# Logging Configuration
+logging:
+  # Log level
+  level: 'INFO'  # Options: 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'
+  
+  # Log format
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+  
+  # Log handlers
+  handlers:
+    console:
+      enabled: true
+      level: 'INFO'
+    file:
+      enabled: true
+      level: 'DEBUG'
+      filename: 'irt_evaluation.log'
+      max_size_mb: 10
+      backup_count: 5
+
+# Advanced Configuration
+advanced:
+  # Numerical stability settings
+  numerical:
+    epsilon: 1e-10
+    max_exponent: 35
+    min_probability: 1e-10
+  
+  # Missing data handling
+  missing_data:
+    method: 'listwise'  # Options: 'listwise', 'pairwise', 'imputation'
+    imputation_method: 'mean'  # Options: 'mean', 'median', 'mode', 'forward_fill'
+  
+  # Outlier detection
+  outliers:
+    method: 'iqr'  # Options: 'iqr', 'zscore', 'isolation_forest'
+    threshold: 3.0
+    action: 'flag'  # Options: 'remove', 'flag', 'winsorize'
+  
+  # Cross-validation settings
+  cross_validation:
+    method: 'k_fold'
+    k: 5
+    random_state: 42
+    stratify: true
+
+# Research-specific Configuration
+research:
+  # Hypothesis testing
+  hypotheses:
+    method_differences: true
+    condition_effects: true
+    model_performance: true
+    order_effects: true
+  
+  # Effect size calculations
+  effect_sizes:
+    cohen_d: true
+    eta_squared: true
+    cramers_v: true
+  
+  # Publication settings
+  publication:
+    figure_quality: 'publication'  # Options: 'draft', 'presentation', 'publication'
+    table_format: 'apa'  # Options: 'apa', 'ieee', 'nature'
+    citation_style: 'apa'
+  
+  # Reproducibility
+  reproducibility:
+    set_random_seed: true
+    random_seed: 42
+    save_environment: true
+    save_code_version: true
+
+# Integration Configuration
+integration:
+  # External libraries
+  optional_libraries:
+    pyirt: true
+    stan: false
+    jags: false
+    mplus: false
+  
+  # Database connections (if needed)
+  database:
+    enabled: false
+    type: 'sqlite'  # Options: 'sqlite', 'postgresql', 'mysql'
+    connection_string: ''
+  
+  # API settings (if needed)
+  api:
+    enabled: false
+    host: 'localhost'
+    port: 8000
+    auth_required: false
+
+# Validation Rules
+validation:
+  # Data validation rules
+  data_rules:
+    person_id:
+      pattern: '^[A-Z]+_[a-z0-9-]+$'
+      required: true
+    item_id:
+      pattern: '^[A-C]_\d+_\d+$'
+      required: true
+    response:
+      type: 'float'
+      range: [0, 1]
+      required: true
+    
+  # Model validation rules
+  model_rules:
+    convergence:
+      required: true
+    log_likelihood:
+      type: 'float'
+      not_nan: true
+    parameters:
+      theta:
+        finite: true
+        range: [-10, 10]
+      beta:
+        finite: true
+        range: [-10, 10]
